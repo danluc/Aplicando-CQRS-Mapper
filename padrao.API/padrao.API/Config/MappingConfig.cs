@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using padrao.API.Models;
 using padrao.API.Models.DTOs.Clientes;
+using padrao.API.Models.DTOs.Hotel;
 using padrao.API.Models.DTOs.Motoristas;
 using padrao.API.Models.DTOs.Onibus;
 using padrao.API.Models.DTOs.Usuarios;
@@ -30,6 +31,10 @@ namespace padrao.API.Config
                .ReverseMap();
             CreateMap<OnibusDTO, Onibus>()
                 .ForMember(e => e.DataCadastro, op => op.Ignore())
+                .ReverseMap();
+            CreateMap<Hotel, HotelDTO>()
+               .ReverseMap();
+            CreateMap<HotelDTO, Hotel>()
                 .ReverseMap();
         }
     }

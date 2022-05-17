@@ -16,6 +16,7 @@ namespace padrao.API.Data
         public virtual DbSet<Clientes> Clientes { get; set; }
         public virtual DbSet<Motoristas> Motoristas { get; set; }
         public virtual DbSet<Onibus> Onibus { get; set; }
+        public virtual DbSet<Hotel> Hotel { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
