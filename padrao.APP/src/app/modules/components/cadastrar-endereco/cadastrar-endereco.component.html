@@ -1,0 +1,100 @@
+<form
+    [formGroup]="form"
+>
+    <div class="flex flex-row items-center justify-center">
+        <mat-form-field
+            appearance="outline"
+            class="fuse-mat-no-subscript w-full mr-4 sm:w-35"
+        >
+            <mat-label>CEP</mat-label>
+            <input
+                matInput
+                [formControlName]="'cep'"
+                autocomplete="off"
+                required
+                mask="00000-000"
+            />
+            <mat-error *ngIf="this.form.get('cep').hasError('required')">
+                Campo obrigatório!
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field
+            appearance="outline"
+            class="fuse-mat-no-subscript w-full mr-4 sm:w-35"
+        >
+            <mat-label>Logradouro</mat-label>
+            <input
+                matInput
+                [formControlName]="'logradouro'"
+                autocomplete="off"
+                required
+            />
+            <mat-error *ngIf="this.form.get('logradouro').hasError('required')">
+                Campo obrigatório!
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field
+            appearance="outline"
+            class="fuse-mat-no-subscript w-full sm:w-35"
+        >
+            <mat-label>Nº</mat-label>
+            <input
+                matInput
+                [formControlName]="'numero'"
+                autocomplete="off"
+                required
+            />
+            <mat-error *ngIf="this.form.get('numero').hasError('required')">
+                Campo obrigatório!
+            </mat-error>
+        </mat-form-field>
+    </div>
+    <div class="flex flex-row items-center justify-center">
+        <mat-form-field
+            appearance="outline"
+            class="fuse-mat-no-subscript w-full mr-4 sm:w-25"
+        >
+            <mat-label>Bairro</mat-label>
+            <input
+                matInput
+                [formControlName]="'bairro'"
+                autocomplete="off"
+                required
+            />
+            <mat-error *ngIf="this.form.get('bairro').hasError('required')">
+                Campo obrigatório!
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field
+            appearance="outline"
+            class="fuse-mat-no-subscript w-full mr-4 sm:w-25"
+        >
+            <mat-label>Cidade</mat-label>
+            <input
+                matInput
+                [formControlName]="'cidade'"
+                autocomplete="off"
+                required
+            />
+            <mat-error *ngIf="this.form.get('cidade').hasError('required')">
+                Campo obrigatório!
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field
+            appearance="outline"
+            class="fuse-mat-no-subscript w-full sm:w-25"
+        >
+            <mat-label>UF</mat-label>
+            <input
+                matInput
+                [formControlName]="'uf'"
+                autocomplete="off"
+                required
+                maxlength="2"
+            />
+            <mat-error *ngIf="this.form.get('uf').hasError('required')">
+                Campo obrigatório!
+            </mat-error>
+        </mat-form-field>
+    </div>
+</form>
