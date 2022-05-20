@@ -12,6 +12,7 @@ import { ShortcutsModule } from 'app/layout/common/shortcuts/shortcuts.module';
 import { UserModule } from 'app/layout/common/user/user.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { CompactLayoutComponent } from 'app/layout/layouts/vertical/compact/compact.component';
+import { FuseLoadingBarModule } from '@fuse/components/loading-bar';
 
 @NgModule({
     declarations: [CompactLayoutComponent],
@@ -23,6 +24,7 @@ import { CompactLayoutComponent } from 'app/layout/layouts/vertical/compact/comp
         MatIconModule,
         MatMenuModule,
         FuseFullscreenModule,
+        FuseLoadingBarModule,
         FuseNavigationModule,
         QuickChatModule,
         ShortcutsModule,

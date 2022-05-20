@@ -78,11 +78,11 @@ export const appRoutes: Route[] = [
                     ),
             },
             {
-                path: 'usuarios',
+                path: 'configuracoes',
                 loadChildren: () =>
-                    import('app/modules/usuarios/usuarios.module').then(
-                        (m) => m.UsuariosModule
-                    ),
+                    import(
+                        'app/modules/configuracoes/configuracoes.module'
+                    ).then((m) => m.ConfiguracoesModule),
             },
         ],
     },

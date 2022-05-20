@@ -11,11 +11,11 @@ export const menuprincipal: FuseNavigationItem[] = [
         perfisAcesso: [RoleUsuario.ADMIN, RoleUsuario.USUARIO],
     },
     {
-        id: 'usuarios',
-        title: 'Usuários',
+        id: 'configuracoes',
+        title: 'Configurações',
         type: 'basic',
-        icon: 'heroicons_outline:users',
-        link: '/usuarios',
+        icon: 'heroicons_outline:cog',
+        link: '/configuracoes',
         perfisAcesso: [RoleUsuario.ADMIN, RoleUsuario.USUARIO],
     },
 ];

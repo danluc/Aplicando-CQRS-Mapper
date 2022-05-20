@@ -5,6 +5,7 @@ import { FuseLoadingBarService } from '@fuse/components/loading-bar';
 import { UsuariosControllerService } from 'app/core/services/controllers/usuarios-controller.service';
 import { ToastService } from 'app/core/services/toast.service';
 
+
 @Component({
     selector: 'app-alterar-senha',
     templateUrl: './alterar-senha.component.html',

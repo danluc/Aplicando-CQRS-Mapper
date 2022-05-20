@@ -1,0 +1,75 @@
+<div class="w-full max-w-3xl">
+    <!-- Form -->
+    <form [formGroup]="form">
+        <div class="grid sm:grid-cols-4 gap-6 w-full mt-8">
+            <!-- Name -->
+            <div class="sm:col-span-4">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Nome da empresa</mat-label>
+                    <input
+                        matInput
+                        formControlName="nome"
+                        required
+                        autocomplete="off"
+                        type="text"
+                    />
+                    <mat-error
+                        *ngIf="this.form.get('nome').hasError('required')"
+                    >
+                        Campo obrigatório!
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <!-- Title -->
+            <div class="sm:col-span-2">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>E-mail da empresa</mat-label>
+                    <input
+                        matInput
+                        formControlName="email"
+                        autocomplete="off"
+                        type="email"
+                    />
+                </mat-form-field>
+            </div>
+            <!-- Company -->
+            <div class="sm:col-span-2">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Telefone da empresa</mat-label>
+                    <input
+                        matInput
+                        formControlName="telefone"
+                        autocomplete="off"
+                        type="tel"
+                    />
+                </mat-form-field>
+            </div>
+            <!-- About -->
+            <div class="sm:col-span-4">
+                <app-cadastrar-endereco></app-cadastrar-endereco>
+            </div>
+        </div>
+        <!-- Divider -->
+        <div class="mt-11 mb-10 border-t"></div>
+
+        <!-- Actions -->
+        <div class="flex items-center justify-end">
+            <!-- Send -->
+            <button
+                class="order-first sm:order-last w-full"
+                mat-flat-button
+                [color]="'primary'"
+                (click)="this.salvar()"
+                [disabled]="!this.form.valid || this.salvando"
+            >
+                <span *ngIf="!this.salvando">Salvar</span>
+                <mat-progress-spinner
+                    *ngIf="this.salvando"
+                    [diameter]="24"
+                    [mode]="'indeterminate'"
+                ></mat-progress-spinner>
+            </button>
+        </div>
+    </form>
+</div>
