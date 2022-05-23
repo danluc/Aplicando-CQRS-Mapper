@@ -25,6 +25,9 @@ import { AlterarSenhaComponent } from './usuarios/alterar-senha/alterar-senha.co
 import { EmpresaComponent } from './empresa/empresa.component';
 import { PlanosComponent } from './planos/planos.component';
 import { CadastrarEnderecoComponent } from '../components/cadastrar-endereco/cadastrar-endereco.component';
+import { NgxMaskModule } from 'ngx-mask';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ComponentesModule } from '../components/componentes.module';
 
 const exampleRoutes: Route[] = [
     {
@@ -37,6 +40,7 @@ const exampleRoutes: Route[] = [
     imports: [
         CommonModule,
         RouterModule.forChild(exampleRoutes),
+        NgxMaskModule.forRoot(),
         MatButtonModule,
         MatDividerModule,
         MatIconModule,
@@ -55,6 +59,8 @@ const exampleRoutes: Route[] = [
         MatIconModule,
         MatSidenavModule,
         MatSlideToggleModule,
+        MatCheckboxModule,
+        ComponentesModule,
     ],
     declarations: [
         ConfiguracoesComponent,
@@ -63,7 +69,6 @@ const exampleRoutes: Route[] = [
         AlterarSenhaComponent,
         EmpresaComponent,
         PlanosComponent,
-        CadastrarEnderecoComponent
     ],
 })
 export class ConfiguracoesModule {}

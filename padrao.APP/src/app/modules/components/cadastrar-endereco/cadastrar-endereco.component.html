@@ -6,6 +6,7 @@
                 matInput
                 [formControlName]="'cep'"
                 autocomplete="off"
+                (keydown)="this.buscarPorCep()"
                 required
                 mask="00000-000"
             />

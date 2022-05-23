@@ -21,7 +21,6 @@
                 </mat-form-field>
             </div>
 
-            <!-- Title -->
             <div class="sm:col-span-2">
                 <mat-form-field class="fuse-mat-no-subscript w-full">
                     <mat-label>E-mail da empresa</mat-label>
@@ -33,8 +32,21 @@
                     />
                 </mat-form-field>
             </div>
-            <!-- Company -->
-            <div class="sm:col-span-2">
+
+            <div class="sm:col-span-1">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>CPF/CNPJ</mat-label>
+                    <input
+                        matInput
+                        formControlName="cpfcnpj"
+                        autocomplete="off"
+                        mask="000.000.000-00||00.000.000/0000-00"
+                        type="tel"
+                    />
+                </mat-form-field>
+            </div>
+
+            <div class="sm:col-span-1">
                 <mat-form-field class="fuse-mat-no-subscript w-full">
                     <mat-label>Telefone da empresa</mat-label>
                     <input
@@ -42,10 +54,11 @@
                         formControlName="telefone"
                         autocomplete="off"
                         type="tel"
+                        mask="(00) 0 0000-0000||(00) 0000-0000"
                     />
                 </mat-form-field>
             </div>
-            <!-- About -->
+
             <div class="sm:col-span-4">
                 <app-cadastrar-endereco></app-cadastrar-endereco>
             </div>
