@@ -1,0 +1,32 @@
+<form [formGroup]="formFile">
+    <input
+        type="file"
+        formControlName="file"
+        accept="image/*"
+        (change)="this.anexarFile($event)"
+        style="display: none"
+        id="selecionar-arquivo"
+    />
+</form>
+<div class="flex flex-row flex-auto min-w-0">
+    <div class="container-anexar-file" (click)="this.abrirSelecionarArquivo()">
+        <span
+            id="selecionar"
+            *ngIf="!this.mostrarImg && !this.salvando"
+            matTooltip="Clique para selecionar uma imagem"
+            >Selecionar uma imagem</span
+        >
+        <mat-progress-spinner
+            *ngIf="this.salvando"
+            [diameter]="24"
+            [mode]="'indeterminate'"
+        ></mat-progress-spinner>
+        <span
+            id="img"
+            *ngIf="this.mostrarImg && !this.salvando"
+            matTooltip="Clique para trocar uma imagem"
+        >
+            <img src="{{ this.base64 }}" class="no-img" />
+        </span>
+    </div>
+</div>

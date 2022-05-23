@@ -36,13 +36,13 @@ namespace padrao.API.Handlers.Comandos.Empresas.CadastrarImgEmpresa
                 }
 
                 var empresa = await _bancoDBContext.Empresas.AsNoTracking().FirstOrDefaultAsync(e => e.Id == request.EmpresaId);
-                empresa.Imagem = await ArquivoHelper.SalvarArquivo(_configuration.GetValue<string>("Imagens:Clinica:Salvar"), request.Arquivo);
+                empresa.Imagem = await ArquivoHelper.SalvarArquivo(_configuration.GetValue<string>("Imagens:Agencia:Salvar"), request.Arquivo);
                 empresa.DataAlteracao = DateTime.Now;
 
                 _bancoDBContext.Empresas.Update(empresa);
                 await _bancoDBContext.SaveChangesAsync(cancellationToken);
 
-                var caminhoArquivo = _configuration.GetValue<string>("Imagens:Clinica:Recuperar") + $"{empresa.Imagem}";
+                var caminhoArquivo = _configuration.GetValue<string>("Imagens:Agencia:Recuperar") + $"{empresa.Imagem}";
                 caminhoArquivo = $"{_configuration.GetValue<string>("linkSistema")}{caminhoArquivo}".Replace("\\", "/");
 
                 return new ResultadoCadastrarImgEmpresa

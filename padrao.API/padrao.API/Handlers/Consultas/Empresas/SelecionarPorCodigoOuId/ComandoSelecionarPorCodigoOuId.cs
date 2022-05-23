@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using padrao.API.Data;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,12 @@ namespace padrao.API.Handlers.Consultas.Empresas.SelecionarPorCodigoOuId
     public class ComandoSelecionarPorCodigoOuId : IRequestHandler<ParametroSelecionarPorCodigoOuId, ResultadoSelecionarPorCodigoOuId>
     {
         private readonly BancoDBContext _bancoDBContext;
+        private readonly IConfiguration _configuration;
 
-        public ComandoSelecionarPorCodigoOuId(BancoDBContext bancoDBContext)
+        public ComandoSelecionarPorCodigoOuId(BancoDBContext bancoDBContext, IConfiguration configuration)
         {
             _bancoDBContext = bancoDBContext;
+            _configuration = configuration;
         }
 
         public async Task<ResultadoSelecionarPorCodigoOuId> Handle(ParametroSelecionarPorCodigoOuId request, CancellationToken cancellationToken)
@@ -28,6 +31,12 @@ namespace padrao.API.Handlers.Consultas.Empresas.SelecionarPorCodigoOuId
                 foreach (var item in dados.Usuarios)
                     item.Senha = string.Empty;
 
+
+                if(dados.Imagem != null)
+                {
+                    var caminhoArquivo = _configuration.GetValue<string>("Imagens:Agencia:Recuperar") + $"{dados.Imagem}";
+                    dados.Imagem = $"{_configuration.GetValue<string>("linkSistema")}{caminhoArquivo}".Replace("\\", "/");
+                }
 
                 return new ResultadoSelecionarPorCodigoOuId
                 {

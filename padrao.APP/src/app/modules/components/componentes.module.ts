@@ -21,6 +21,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { PipesModule } from 'app/core/pipe/pipes.module';
+import { CadastrarImagemComponent } from './cadastrar-imagem/cadastrar-imagem.component';
 
 @NgModule({
     imports: [
@@ -47,7 +48,7 @@ import { PipesModule } from 'app/core/pipe/pipes.module';
         MatMomentDateModule,
         PipesModule,
     ],
-    exports: [CadastrarEnderecoComponent],
-    declarations: [CadastrarEnderecoComponent],
+    exports: [CadastrarEnderecoComponent, CadastrarImagemComponent],
+    declarations: [CadastrarEnderecoComponent, CadastrarImagemComponent],
 })
 export class ComponentesModule {}

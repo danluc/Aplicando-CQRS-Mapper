@@ -1,0 +1,45 @@
+.container-anexar-file,
+.container-anexar-img {
+    height: 160px;
+    background: #efe4e452;
+    width: 100%;
+    border-style: dashed;
+    border-radius: 8px;
+    border-color: #c4c4c4;
+    line-height: 150px;
+    cursor: pointer;
+    overflow: hidden;
+    span {
+        display: table;
+        margin: auto;
+        font-size: 23px;
+        font-weight: 600;
+        color: #5c799c;
+
+        .no-img {
+            height: 130px !important;
+        }
+
+        .tem-img {
+            height: 230px !important;
+        }
+
+        p {
+            margin-top: -100px;
+            font-size: 14px;
+            text-align: center;
+            color: #a8a8a8;
+        }
+    }
+
+    #img {
+        text-align: center;
+    }
+}
+
+.container-anexar-img {
+    height: 260px !important;
+    p {
+        margin-top: -60px !important;
+    }
+}

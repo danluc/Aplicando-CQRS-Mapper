@@ -28,6 +28,7 @@ import { CadastrarEnderecoComponent } from '../components/cadastrar-endereco/cad
 import { NgxMaskModule } from 'ngx-mask';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ComponentesModule } from '../components/componentes.module';
+import { InserirImagemComponent } from './empresa/inserir-imagem/inserir-imagem.component';
 
 const exampleRoutes: Route[] = [
     {
@@ -69,6 +70,7 @@ const exampleRoutes: Route[] = [
         AlterarSenhaComponent,
         EmpresaComponent,
         PlanosComponent,
+        InserirImagemComponent,
     ],
 })
 export class ConfiguracoesModule {}

@@ -21,6 +21,7 @@ export class EmpresaComponent implements OnInit {
     public dados: Empresas = new Empresas();
     public form: FormGroup;
     public salvando: boolean = false;
+    public mostrarInsertImgem: boolean = false;
 
     constructor(
         private _matDialog: MatDialog,
@@ -56,6 +57,7 @@ export class EmpresaComponent implements OnInit {
                 this.dados = res.empresa;
                 this._setarDados();
                 this._fuseLoadingService.hide();
+                this.mostrarInsertImgem = true;
             },
             (erro) => {
                 this._toastService.mensagemError(
