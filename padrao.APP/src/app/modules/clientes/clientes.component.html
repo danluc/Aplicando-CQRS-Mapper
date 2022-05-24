@@ -30,7 +30,6 @@
                                         <mat-icon
                                             class="icon-size-5"
                                             [svgIcon]="'heroicons_solid:plus'"
-                                            
                                         ></mat-icon>
                                         <span class="ml-2">Adicionar</span>
                                     </button>
@@ -89,25 +88,25 @@
                                     <span class="pr-6 whitespace-nowrap">
                                         {{
                                             item.telefone
-                                                | mask: "(00) 0 0000-0000"
+                                                | mask: "(00) 0 0000-0000||(00) 0000-0000"
                                         }}
                                     </span>
                                 </td>
                             </ng-container>
 
-                            <ng-container matColumnDef="dataCadastro">
+                            <ng-container matColumnDef="celular">
                                 <th
                                     mat-header-cell
                                     mat-sort-header
                                     *matHeaderCellDef
                                 >
-                                    Data Cadastro
+                                    Celular
                                 </th>
                                 <td mat-cell *matCellDef="let item">
                                     <span class="pr-6 whitespace-nowrap">
                                         {{
-                                            item.dataCadastro
-                                                | date: "dd/MM/yyyy"
+                                            item.celular
+                                                | mask: "(00) 0 0000-0000||(00) 0000-0000"
                                         }}
                                     </span>
                                 </td>

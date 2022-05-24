@@ -25,8 +25,8 @@ export class ClientesComponent implements OnInit {
     public tabelaColunas: string[] = [
         'nome',
         'cpf',
+        'celular',
         'telefone',
-        'dataCadastro',
         'acoes',
     ];
 
@@ -52,7 +52,7 @@ export class ClientesComponent implements OnInit {
 
     public carregarMais(): void {
         this.filtro.skip = this.dados.length;
-        this._buscarDados;
+        this._buscarDados();
     }
 
     private _buscarDados(): void {
@@ -68,7 +68,11 @@ export class ClientesComponent implements OnInit {
                         return;
                     }
                     this._fuseLoadingService.hide();
-                    this.dados = res.clientes;
+                    if (this.filtro.skip === 0) {
+                        this.dados = res.clientes;
+                    } else {
+                        this.dados = this.dados.concat(...res.clientes);
+                    }
                     this.podeCarregarMais = res.carregarMais;
                     this.tabelaDados.data = this.dados;
                     this.temRegistro = res.clientes.length > 0;

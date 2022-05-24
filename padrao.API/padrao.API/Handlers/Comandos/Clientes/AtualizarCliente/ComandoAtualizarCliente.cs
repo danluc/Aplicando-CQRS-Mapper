@@ -26,7 +26,7 @@ namespace padrao.API.Handlers.Comandos.Clientes.AtualizarCliente
         {
             try
             {
-                var hasCliente = await _bancoDBContext.Clientes.AsNoTracking()
+                var hasCliente = await _bancoDBContext.Clientes.AsNoTracking().Include(e => e.Endereco)
                                                         .FirstOrDefaultAsync(e => e.EmpresaId == request.EmpresaId && e.Codigo == request.Cliente.Codigo);
                 if (hasCliente == null)
                 {
@@ -37,16 +37,11 @@ namespace padrao.API.Handlers.Comandos.Clientes.AtualizarCliente
                     };
                 }
 
-                if (request.Cliente.Endereco != null && hasCliente.Endereco == null)
+                if (request.Cliente.Endereco != null)
                 {
                     var endereco = await CadastrarEndereco(request.Cliente.Endereco);
-                    request.Cliente.EnderecoId = endereco.Id;
+                    hasCliente.EnderecoId = endereco.Id;
                     request.Cliente.Endereco = endereco;
-                }
-                else if (hasCliente.Endereco != null && request.Cliente.Endereco != null)
-                {
-                    request.Cliente.Endereco.Id = hasCliente.EnderecoId.Value;
-                    request.Cliente.Endereco = await AtualizarEndereco(request.Cliente.Endereco);
                 }
 
                 hasCliente.Nome = String.IsNullOrEmpty(request.Cliente.Nome) ? hasCliente.Nome : request.Cliente.Nome;
@@ -86,13 +81,6 @@ namespace padrao.API.Handlers.Comandos.Clientes.AtualizarCliente
             var result = await _bancoDBContext.AddAsync(enderecos);
             await _bancoDBContext.SaveChangesAsync();
 
-            return result.Entity;
-        }
-
-        private async Task<Models.Enderecos> AtualizarEndereco(Models.Enderecos enderecos)
-        {
-            var result = _bancoDBContext.Update(enderecos);
-            await _bancoDBContext.SaveChangesAsync();
             return result.Entity;
         }
     }

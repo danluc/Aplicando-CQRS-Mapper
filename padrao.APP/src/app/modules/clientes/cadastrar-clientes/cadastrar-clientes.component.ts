@@ -103,7 +103,7 @@ export class CadastrarClientesComponent implements OnInit {
             celular: [this.data.dados.celular, [Validators.maxLength(50)]],
             dataNascimento: [
                 this.data.dados.dataNascimento,
-                [Validators.maxLength(50)],
+                [Validators.maxLength(50), Validators.required],
             ],
             observacao: [
                 this.data.dados.observacao,

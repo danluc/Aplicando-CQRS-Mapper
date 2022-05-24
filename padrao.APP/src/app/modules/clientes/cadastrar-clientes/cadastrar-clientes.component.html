@@ -7,7 +7,7 @@
             {{
                 this.data.verbo == this.enumVerbosHTTP.POST
                     ? "Novo"
-                    : "Atualizar"
+                    : this.data.dados.nome
             }}
         </div>
         <button mat-icon-button [tabIndex]="-1" (click)="this.fechar()">
@@ -60,7 +60,7 @@
                     matInput
                     formControlName="celular"
                     autocomplete="off"
-                    mask="(00) 0 0000-0000"
+                    mask="(00) 0 0000-0000||(00) 0000-0000"
                 />
             </mat-form-field>
             <mat-form-field
@@ -72,7 +72,7 @@
                     matInput
                     formControlName="telefone"
                     autocomplete="off"
-                    mask="(00) 0 0000-0000"
+                    mask="(00) 0 0000-0000||(00) 0000-0000"
                 />
             </mat-form-field>
         </div>
@@ -104,12 +104,16 @@
                     matInput
                     [formControlName]="'dataNascimento'"
                     [matDatepicker]="DataNascimento"
+                    required
                 />
                 <mat-datepicker-toggle
                     matSuffix
                     [for]="DataNascimento"
                 ></mat-datepicker-toggle>
                 <mat-datepicker #DataNascimento></mat-datepicker>
+                <mat-error *ngIf="this.form.get('dataNascimento').hasError('required')">
+                    Campo obrigatório!
+                </mat-error>
             </mat-form-field>
         </div>
         <div class="flex flex-column">
