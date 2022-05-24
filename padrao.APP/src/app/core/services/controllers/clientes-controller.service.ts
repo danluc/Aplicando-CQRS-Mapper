@@ -36,8 +36,8 @@ export class ClientesControllerService extends BaseControllerService {
         return this.get(`clientes/${codigo}`);
     }
 
-    public listar(): Observable<ResultadoClientes> {
-        return this.get<ResultadoClientes>(`clientes`);
+    public listar(skip: number, take: number): Observable<ResultadoClientes> {
+        return this.get<ResultadoClientes>(`clientes/${skip}/${take}`);
     }
 
     public alterarStatus(codigo: string): Observable<ResultadoCliente> {

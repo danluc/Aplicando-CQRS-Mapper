@@ -1,6 +1,6 @@
 <div class="flex flex-col flex-auto min-w-0">
     <!-- Main -->
-    <div class="flex-auto">
+    <div class="flex-auto p-6 sm:p-10">
         <!-- CONTENT GOES HERE -->
         <div class="h-full min-h-full max-h-full rounded-2xl">
             <div class="grid grid-cols-1 gap-8 w-full">
@@ -13,7 +13,9 @@
                             <div class="flex flex-col">
                                 <div
                                     class="mr-4 text-lg font-medium tracking-tight leading-6 truncate"
-                                ></div>
+                                >
+                                    Clientes
+                                </div>
                             </div>
                             <div class="ml-2">
                                 <div
@@ -28,6 +30,7 @@
                                         <mat-icon
                                             class="icon-size-5"
                                             [svgIcon]="'heroicons_solid:plus'"
+                                            
                                         ></mat-icon>
                                         <span class="ml-2">Adicionar</span>
                                     </button>
@@ -59,46 +62,54 @@
                                 </td>
                             </ng-container>
 
-                            <ng-container matColumnDef="email">
+                            <ng-container matColumnDef="cpf">
                                 <th
                                     mat-header-cell
                                     mat-sort-header
                                     *matHeaderCellDef
                                 >
-                                    E-mail
+                                    CPF
                                 </th>
                                 <td mat-cell *matCellDef="let item">
                                     <span class="pr-6 whitespace-nowrap">
-                                        {{ item.email }}
+                                        {{ item.cpf | mask: "000.000.000-00" }}
                                     </span>
                                 </td>
                             </ng-container>
 
-                            <ng-container matColumnDef="situacao">
+                            <ng-container matColumnDef="telefone">
                                 <th
                                     mat-header-cell
                                     mat-sort-header
                                     *matHeaderCellDef
                                 >
-                                    Situação
+                                    Telefone
                                 </th>
                                 <td mat-cell *matCellDef="let item">
-                                    <span
-                                        *ngIf="item.situacao"
-                                        class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50"
-                                        ><span
-                                            class="leading-relaxed whitespace-nowrap"
-                                            >Ativo</span
-                                        ></span
-                                    >
-                                    <span
-                                        *ngIf="!item.situacao"
-                                        class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50"
-                                        ><span
-                                            class="leading-relaxed whitespace-nowrap"
-                                            >Bloqueado</span
-                                        ></span
-                                    >
+                                    <span class="pr-6 whitespace-nowrap">
+                                        {{
+                                            item.telefone
+                                                | mask: "(00) 0 0000-0000"
+                                        }}
+                                    </span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="dataCadastro">
+                                <th
+                                    mat-header-cell
+                                    mat-sort-header
+                                    *matHeaderCellDef
+                                >
+                                    Data Cadastro
+                                </th>
+                                <td mat-cell *matCellDef="let item">
+                                    <span class="pr-6 whitespace-nowrap">
+                                        {{
+                                            item.dataCadastro
+                                                | date: "dd/MM/yyyy"
+                                        }}
+                                    </span>
                                 </td>
                             </ng-container>
 
@@ -115,44 +126,11 @@
                                     >
                                         <button
                                             mat-icon-button
-                                            matTooltip="Alterar Senha"
-                                            *ngIf="
-                                                item.id ===
-                                                this.usuarioLogado.id
-                                            "
-                                            (click)="this.alterarSenha()"
-                                        >
-                                            <mat-icon
-                                                svgIcon="heroicons_outline:key"
-                                            ></mat-icon>
-                                        </button>
-
-                                        <button
-                                            mat-icon-button
-                                            matTooltip="Editar acessos"
+                                            matTooltip="Editar"
                                             (click)="this.modalAlterar(item)"
                                         >
                                             <mat-icon
-                                                svgIcon="heroicons_outline:backspace"
-                                            ></mat-icon>
-                                        </button>
-                                        <button
-                                            mat-icon-button
-                                            matTooltip="{{
-                                                !item.situacao
-                                                    ? 'Ativar'
-                                                    : 'Bloquea'
-                                            }} usuário"
-                                            (click)="
-                                                this._atualizarSituacao(item)
-                                            "
-                                            *ngIf="
-                                                item.id !==
-                                                this.usuarioLogado.id
-                                            "
-                                        >
-                                            <mat-icon
-                                                svgIcon="heroicons_outline:switch-horizontal"
+                                                svgIcon="heroicons_outline:pencil"
                                             ></mat-icon>
                                         </button>
                                     </span>
@@ -169,10 +147,7 @@
                                     *matFooterCellDef
                                     colspan="6"
                                 >
-                                    <span
-                                        *ngIf="
-                                            this.tabelaDados.data.length == 0
-                                        "
+                                    <span *ngIf="!this.temRegistro"
                                         >Nenhum resultado!</span
                                     >
                                 </td>
@@ -193,6 +168,14 @@
                                 *matFooterRowDef="['recentOrdersTableFooter']"
                             ></tr>
                         </table>
+                        <div
+                            class="text-center mb-5"
+                            *ngIf="this.podeCarregarMais"
+                        >
+                            <p class="pointer" (click)="this.carregarMais()">
+                                Carregar mais
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -26,11 +26,21 @@ namespace padrao.API.Handlers.Consultas.Clientes.ListarClientesPorEmpresa
         {
             try
             {
-                var clientes = await _bancoDBContext.Clientes.Include(e => e.Endereco).Include(e => e.Empresa).Where(e => e.Situacao).ToListAsync();
+                var clientes = await _bancoDBContext.Clientes.Include(e => e.Endereco)
+                                                        .Include(e => e.Empresa)
+                                                        .Where(e => e.Situacao)
+                                                        .OrderByDescending(c => c.Id)
+                                                        .Skip(request.Skip)
+                                                        .Take(request.Take + 1)
+                                                        .ToListAsync();
+
+                var carregarMais = clientes.Count() == request.Take + 1;
+
                 return new ResultadoListarClientesPorEmpresa
                 {
                     Clientes = _mapper.Map<List<ClienteDTO>>(clientes),
-                    Sucesso = true
+                    Sucesso = true,
+                    CarregarMais = carregarMais
                 };
             }
             catch (Exception ex)

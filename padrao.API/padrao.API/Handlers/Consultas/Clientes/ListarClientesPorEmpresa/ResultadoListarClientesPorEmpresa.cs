@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace padrao.API.Handlers.Consultas.Clientes.ListarClientesPorEmpresa
 {
-    public class ResultadoListarClientesPorEmpresa : ResultadoControllerDTO
+    public class ResultadoListarClientesPorEmpresa : ResultadoPaginacaoDTO
     {
         public List<ClienteDTO> Clientes { get; set; }
     }

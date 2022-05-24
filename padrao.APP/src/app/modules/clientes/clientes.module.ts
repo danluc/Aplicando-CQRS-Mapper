@@ -15,25 +15,24 @@ import { MatSelectModule } from '@angular/material/select';
 import { FuseAlertModule } from '@fuse/components/alert';
 import { FuseCardModule } from '@fuse/components/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ConfiguracoesComponent } from './configuracoes.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MinhaContaComponent } from './minha-conta/minha-conta.component';
-import { UsuariosComponent } from './usuarios/usuarios.component';
-import { AlterarSenhaComponent } from './usuarios/alterar-senha/alterar-senha.component';
-import { EmpresaComponent } from './empresa/empresa.component';
-import { PlanosComponent } from './planos/planos.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ComponentesModule } from '../components/componentes.module';
-import { InserirImagemComponent } from './empresa/inserir-imagem/inserir-imagem.component';
-import { CadastrarUsuarioComponent } from './usuarios/cadastrar-usuario/cadastrar-usuario.component';
+import { ClientesComponent } from './clientes.component';
+import { CadastrarClientesComponent } from './cadastrar-clientes/cadastrar-clientes.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { PipesModule } from 'app/core/pipe/pipes.module';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 const exampleRoutes: Route[] = [
     {
         path: '',
-        component: ConfiguracoesComponent,
+        component: ClientesComponent,
     },
 ];
 
@@ -62,16 +61,13 @@ const exampleRoutes: Route[] = [
         MatSlideToggleModule,
         MatCheckboxModule,
         ComponentesModule,
+        MatDatepickerModule,
+        MatMomentDateModule,
+        PipesModule,
+        MatNativeDateModule,
+        MatAutocompleteModule,
     ],
-    declarations: [
-        ConfiguracoesComponent,
-        MinhaContaComponent,
-        UsuariosComponent,
-        AlterarSenhaComponent,
-        EmpresaComponent,
-        PlanosComponent,
-        InserirImagemComponent,
-        CadastrarUsuarioComponent,
-    ],
+    declarations: [ClientesComponent, CadastrarClientesComponent],
+    providers: [{ provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }],
 })
-export class ConfiguracoesModule {}
+export class ClientesModule {}

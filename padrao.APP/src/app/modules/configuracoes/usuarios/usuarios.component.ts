@@ -24,7 +24,6 @@ export class UsuariosComponent implements OnInit {
         'nome',
         'email',
         'situacao',
-        'dataCadastro',
         'acoes',
     ];
     public usuarios: Array<Usuarios> = [];

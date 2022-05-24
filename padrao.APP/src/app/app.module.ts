@@ -16,6 +16,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { PipesModule } from './core/pipe/pipes.module';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
 
@@ -35,6 +37,8 @@ const routerConfig: ExtraOptions = {
         FuseModule,
         FuseConfigModule.forRoot(appConfig),
         FuseMockApiModule.forRoot(mockApiServices),
+        MatDatepickerModule,
+        MatNativeDateModule,
         // Core module of your application
         CoreModule,
         PipesModule,

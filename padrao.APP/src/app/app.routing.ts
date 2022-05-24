@@ -84,6 +84,13 @@ export const appRoutes: Route[] = [
                         'app/modules/configuracoes/configuracoes.module'
                     ).then((m) => m.ConfiguracoesModule),
             },
+            {
+                path: 'clientes',
+                loadChildren: () =>
+                    import('app/modules/clientes/clientes.module').then(
+                        (m) => m.ClientesModule
+                    ),
+            },
         ],
     },
 ];
