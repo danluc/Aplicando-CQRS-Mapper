@@ -6,5 +6,5 @@ export class RegistrarDTO {
     email: string;
     senha: string;
     empresaId?: Empresas;
-    funcoes?: Funcao;
+    funcoes?: Funcao | string;
 }

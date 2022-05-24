@@ -12,6 +12,7 @@ import { ShortcutsModule } from 'app/layout/common/shortcuts/shortcuts.module';
 import { UserModule } from 'app/layout/common/user/user.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { DenseLayoutComponent } from 'app/layout/layouts/vertical/dense/dense.component';
+import { FuseLoadingBarModule } from '@fuse/components/loading-bar';
 
 @NgModule({
     declarations: [DenseLayoutComponent],
@@ -24,6 +25,7 @@ import { DenseLayoutComponent } from 'app/layout/layouts/vertical/dense/dense.co
         MatMenuModule,
         FuseFullscreenModule,
         FuseNavigationModule,
+        FuseLoadingBarModule,
         QuickChatModule,
         ShortcutsModule,
         UserModule,

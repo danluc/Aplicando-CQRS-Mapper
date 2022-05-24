@@ -36,7 +36,7 @@ export class ConfiguracoesComponent implements OnInit {
         this.panels = [
             {
                 id: 'empresa',
-                icon: 'heroicons_outline:user-circle',
+                icon: 'heroicons_outline:office-building',
                 title: 'Empresa',
                 description: 'Dados da empresa',
             },

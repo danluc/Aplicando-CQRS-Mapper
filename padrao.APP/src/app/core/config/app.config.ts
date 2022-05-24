@@ -23,7 +23,7 @@ export interface AppConfig {
  * FuseConfigService and its methods.
  */
 export const appConfig: AppConfig = {
-    layout: 'compact',
+    layout: 'dense',
     scheme: 'light',
     theme: 'default',
 };

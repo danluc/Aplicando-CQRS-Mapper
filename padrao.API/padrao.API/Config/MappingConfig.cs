@@ -13,7 +13,8 @@ namespace padrao.API.Config
     {
         public AutoMapperSetup()
         {
-            CreateMap<Usuarios, UsuarioDTO>().ReverseMap();
+            CreateMap<Usuarios, UsuarioDTO>()
+                .ReverseMap();
             CreateMap<UsuarioDTO, Usuarios>()
                 .ForMember(e => e.DataCadastro, op => op.Ignore())
                 .ReverseMap();

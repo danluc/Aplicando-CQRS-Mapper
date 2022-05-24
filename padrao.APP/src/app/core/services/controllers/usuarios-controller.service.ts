@@ -36,4 +36,13 @@ export class UsuariosControllerService extends BaseControllerService {
     public alterarSenha(novaSenha: string): Observable<ResultadoDefault> {
         return this.put(`usuarios/alterarsenha`, { novaSenha });
     }
+
+    public adicionarUsuario(dados: RegistrarDTO): Observable<ResultadoLogin> {
+        return this.post(`usuarios/AdicionarUsuario`, {
+            email: dados.email,
+            senha: dados.senha,
+            nome: dados.nome,
+            funcoes: dados.funcoes,
+        });
+    }
 }

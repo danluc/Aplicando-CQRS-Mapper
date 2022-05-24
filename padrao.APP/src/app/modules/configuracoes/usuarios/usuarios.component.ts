@@ -3,11 +3,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { FuseLoadingBarService } from '@fuse/components/loading-bar';
+import { VerbosHTTP } from 'app/core/models/usuarios/enums/verbos-http';
 import { Usuarios } from 'app/core/models/usuarios/usuarios';
 import { AuthenticationService } from 'app/core/services/authentication.service';
 import { UsuariosControllerService } from 'app/core/services/controllers/usuarios-controller.service';
 import { ToastService } from 'app/core/services/toast.service';
 import { AlterarSenhaComponent } from './alterar-senha/alterar-senha.component';
+import { CadastrarUsuarioComponent } from './cadastrar-usuario/cadastrar-usuario.component';
 
 @Component({
     selector: 'app-usuarios',
@@ -74,5 +76,24 @@ export class UsuariosComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe((result) => {});
+    }
+
+    public modalNovo(): void {
+        const dialogRef = this._matDialog.open(CadastrarUsuarioComponent, {
+            width: window.innerWidth < 600 ? '95%' : 'auto',
+            maxWidth: window.innerWidth < 600 ? '99vw' : 'auto',
+            autoFocus: false,
+            disableClose: true,
+            data: {
+                verbo: VerbosHTTP.POST,
+                dados: {},
+            },
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+                this._buscarUsuarios();
+            }
+        });
     }
 }

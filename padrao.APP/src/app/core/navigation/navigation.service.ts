@@ -38,9 +38,9 @@ export class NavigationService {
     get(): Observable<Navigation> {
         const menuDoSistema = {
             compact: menuprincipal,
-            default: [],
-            futuristic: [],
-            horizontal: [],
+            default: menuprincipal,
+            futuristic: menuprincipal,
+            horizontal: menuprincipal,
         };
         const locations = new Observable<Navigation>((observer) => {
             observer.next(menuDoSistema);
