@@ -29,8 +29,8 @@ export class UsuariosControllerService extends BaseControllerService {
         });
     }
 
-    public listarUsuarios(): Observable<ResultadoSelecionarEmpresa> {
-        return this.get<ResultadoSelecionarEmpresa>(`empresas/selecionar`);
+    public listarUsuarios(): Observable<ResultadoListaUsuario> {
+        return this.get<ResultadoListaUsuario>(`usuarios`);
     }
 
     public alterarSenha(novaSenha: string): Observable<ResultadoDefault> {
@@ -44,5 +44,18 @@ export class UsuariosControllerService extends BaseControllerService {
             nome: dados.nome,
             funcoes: dados.funcoes,
         });
+    }
+
+    public alterarFuncao(
+        funcao: string,
+        codigo: string
+    ): Observable<ResultadoDefault> {
+        return this.put(`usuarios/AlterarFuncao/${codigo}`, {
+            funcao: funcao,
+        });
+    }
+
+    public alterarStatus(codigo: string): Observable<ResultadoDefault> {
+        return this.put(`usuarios/AlterarStatus/${codigo}`, null);
     }
 }

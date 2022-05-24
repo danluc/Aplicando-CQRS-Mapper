@@ -20,7 +20,13 @@ export class UsuariosComponent implements OnInit {
     @ViewChild('recentTransactionsTable', { read: MatSort })
     public tabelaOrder: MatSort;
     public tabelaDados: MatTableDataSource<any> = new MatTableDataSource();
-    public tabelaColunas: string[] = ['nome', 'email', 'dataCadastro', 'acoes'];
+    public tabelaColunas: string[] = [
+        'nome',
+        'email',
+        'situacao',
+        'dataCadastro',
+        'acoes',
+    ];
     public usuarios: Array<Usuarios> = [];
     public usuarioLogado: Usuarios;
 
@@ -51,7 +57,7 @@ export class UsuariosComponent implements OnInit {
                     );
                     return;
                 }
-                this.usuarios = res.empresa.usuarios;
+                this.usuarios = res.usuarios;
                 this.tabelaDados.data = this.usuarios;
                 this.tabelaDados.sort = this.tabelaOrder;
                 this._fuseLoadingService.hide();
@@ -95,5 +101,50 @@ export class UsuariosComponent implements OnInit {
                 this._buscarUsuarios();
             }
         });
+    }
+
+    public modalAlterar(item: Usuarios): void {
+        const dialogRef = this._matDialog.open(CadastrarUsuarioComponent, {
+            width: window.innerWidth < 600 ? '95%' : 'auto',
+            maxWidth: window.innerWidth < 600 ? '99vw' : 'auto',
+            autoFocus: false,
+            disableClose: true,
+            data: {
+                verbo: VerbosHTTP.PUT,
+                dados: item,
+            },
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+                this._buscarUsuarios();
+            }
+        });
+    }
+
+    public _atualizarSituacao(item: Usuarios): void {
+        this._fuseLoadingService.show();
+        this._usuariosControllerService.alterarStatus(item.codigo).subscribe(
+            (res) => {
+                if (!res.sucesso) {
+                    this._toastService.mensagemError(
+                        'Erro ao alterar: ' + res.mensagem
+                    );
+                    return;
+                }
+                this._toastService.mensagemSuccess(
+                    'Dados atualizado com sucesso!'
+                );
+                this._fuseLoadingService.hide();
+                this._buscarUsuarios();
+            },
+            (err) => {
+                console.log(err.error);
+                this._fuseLoadingService.hide();
+                this._toastService.mensagemError(
+                    'Erro ao alterar: ' + err.error
+                );
+            }
+        );
     }
 }

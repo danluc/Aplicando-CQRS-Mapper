@@ -46,7 +46,7 @@ export class EmpresaComponent implements OnInit {
 
     private _selecionarEmpresa(): void {
         this._fuseLoadingService.show();
-        this._usuariosControllerService.listarUsuarios().subscribe(
+        this._empresaControllerService.selecionar().subscribe(
             (res) => {
                 if (!res.sucesso) {
                     this._toastService.mensagemError(

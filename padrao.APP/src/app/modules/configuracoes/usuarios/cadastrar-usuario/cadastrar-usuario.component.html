@@ -7,7 +7,7 @@
             {{
                 this.data.verbo == this.enumVerbosHTTP.POST
                     ? "Novo"
-                    : "Atualizar"
+                    : this.data.dados.nome
             }}
         </div>
         <button mat-icon-button [tabIndex]="-1" (click)="this.fechar()">
@@ -23,7 +23,10 @@
         [formGroup]="form"
     >
         <div class="corpo w-full">
-            <div class="sm:grid sm:grid-cols-2 sm:gap-2">
+            <div
+                class="sm:grid sm:grid-cols-2 sm:gap-2"
+                *ngIf="this.data.verbo == this.enumVerbosHTTP.POST"
+            >
                 <mat-form-field appearance="outline" class="w-full">
                     <mat-label>Nome</mat-label>
                     <input
@@ -52,9 +55,7 @@
                     >
                         Campo obrigatório!
                     </mat-error>
-                    <mat-error
-                        *ngIf="this.form.get('email').hasError('email')"
-                    >
+                    <mat-error *ngIf="this.form.get('email').hasError('email')">
                         E-mail inválido
                     </mat-error>
                 </mat-form-field>

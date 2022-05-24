@@ -41,12 +41,6 @@ export class ConfiguracoesComponent implements OnInit {
                 description: 'Dados da empresa',
             },
             {
-                id: 'account',
-                icon: 'heroicons_outline:user-circle',
-                title: 'Minha conta',
-                description: 'Dados da sua conta',
-            },
-            {
                 id: 'usuarios',
                 icon: 'heroicons_outline:user-group',
                 title: 'Usuários',
