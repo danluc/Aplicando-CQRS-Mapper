@@ -24,15 +24,35 @@ import { ComponentesModule } from '../components/componentes.module';
 import { ClientesComponent } from './clientes.component';
 import { CadastrarClientesComponent } from './cadastrar-clientes/cadastrar-clientes.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import {
+    MatNativeDateModule,
+    MatRippleModule,
+    MAT_DATE_LOCALE,
+} from '@angular/material/core';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { PipesModule } from 'app/core/pipe/pipes.module';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { FuseFindByKeyPipeModule } from '@fuse/pipes/find-by-key';
+import { MatRadioModule } from '@angular/material/radio';
+import { ListaContatosComponent } from './lista-contatos/lista-contatos.component';
+import { DetalheClienteComponent } from './detalhe-cliente/detalhe-cliente.component';
 
 const exampleRoutes: Route[] = [
     {
         path: '',
         component: ClientesComponent,
+        children: [
+            {
+                path: '',
+                component: ListaContatosComponent,
+                children: [
+                    {
+                        path: ':codigo',
+                        component: DetalheClienteComponent,
+                    },
+                ],
+            },
+        ],
     },
 ];
 
@@ -66,8 +86,16 @@ const exampleRoutes: Route[] = [
         PipesModule,
         MatNativeDateModule,
         MatAutocompleteModule,
+        MatRadioModule,
+        MatRippleModule,
+        FuseFindByKeyPipeModule,
     ],
-    declarations: [ClientesComponent, CadastrarClientesComponent],
+    declarations: [
+        ClientesComponent,
+        CadastrarClientesComponent,
+        ListaContatosComponent,
+        DetalheClienteComponent,
+    ],
     providers: [{ provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }],
 })
 export class ClientesModule {}

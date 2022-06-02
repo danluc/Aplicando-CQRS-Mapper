@@ -1,0 +1,193 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
+    <mat-drawer-container
+        class="flex-auto h-full bg-card dark:bg-transparent"
+        (backdropClick)="onBackdropClicked()"
+    >
+        <!-- Drawer -->
+        <mat-drawer
+            class="w-full md:w-160 dark:bg-gray-900"
+            [mode]="drawerMode"
+            [opened]="false"
+            [position]="'end'"
+            [disableClose]="true"
+            #matDrawer
+        >
+            <router-outlet></router-outlet>
+        </mat-drawer>
+
+        <mat-drawer-content class="flex flex-col">
+            <!-- Main -->
+            <div class="flex-auto">
+                <!-- Header -->
+                <div
+                    class="flex flex-col sm:flex-row md:flex-col flex-auto justify-between py-8 px-6 md:px-8 border-b"
+                >
+                    <!-- Title -->
+                    <div>
+                        <div
+                            class="text-4xl font-extrabold tracking-tight leading-none"
+                        >
+                            Clientes
+                        </div>
+                    </div>
+
+                    <!-- Main actions -->
+                    <div class="flex items-center mt-4 sm:mt-0 md:mt-4">
+                        <!-- Search -->
+                        <div class="flex-auto">
+                            <mat-form-field
+                                class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded w-full min-w-50"
+                            >
+                                <mat-icon
+                                    class="icon-size-5"
+                                    matPrefix
+                                    [svgIcon]="'heroicons_solid:search'"
+                                ></mat-icon>
+                                <input
+                                    matInput
+                                    [autocomplete]="'off'"
+                                    [placeholder]="'Search clientes'"
+                                />
+                            </mat-form-field>
+                        </div>
+                        <!-- Add cliente button -->
+                        <button
+                            class="ml-4"
+                            mat-flat-button
+                            [color]="'primary'"
+                            (click)="modalNovo()"
+                        >
+                            <mat-icon
+                                [svgIcon]="'heroicons_outline:plus'"
+                            ></mat-icon>
+                            <span class="ml-2 mr-1">Add</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- clientes list -->
+                <div class="relative">
+                    <ng-container *ngIf="this.dados">
+                        <ng-container
+                            *ngIf="this.dados.length; else noclientes"
+                        >
+                            <ng-container
+                                *ngFor="
+                                    let cliente of this.dados;
+                                    let i = index;
+                                    trackBy: trackByFn
+                                "
+                            >
+                                <!-- Group -->
+                                <ng-container
+                                    *ngIf="
+                                        i === 0 ||
+                                        cliente.nome.charAt(0) !==
+                                            this.dados[i - 1].nome.charAt(0)
+                                    "
+                                >
+                                    <div
+                                        class="z-10 sticky top-0 -mt-px px-6 py-1 md:px-8 border-t border-b font-medium uppercase text-secondary bg-gray-50 dark:bg-gray-900"
+                                    >
+                                        {{ cliente.nome.charAt(0) }}
+                                    </div>
+                                </ng-container>
+                                <!-- cliente -->
+                                <a
+                                    class="z-20 flex items-center px-6 py-4 md:px-8 cursor-pointer border-b"
+                                    [ngClass]="{
+                                        'hover:bg-gray-100 dark:hover:bg-hover':
+                                            !clienteSelecionado ||
+                                            clienteSelecionado.codigo !==
+                                                cliente.codigo,
+                                        'bg-primary-50 dark:bg-hover':
+                                            clienteSelecionado &&
+                                            clienteSelecionado.codigo ===
+                                                cliente.codigo
+                                    }"
+                                    [routerLink]="['./', cliente.codigo]"
+                                >
+                                    <div
+                                        class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden"
+                                    >
+                                        <ng-container>
+                                            <div
+                                                class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200"
+                                            >
+                                                {{ cliente.nome.charAt(0) }}
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                    <div class="min-w-0 ml-4">
+                                        <div
+                                            class="font-medium leading-5 truncate"
+                                        >
+                                            {{ cliente.nome }}
+                                        </div>
+                                        <div
+                                            class="leading-5 truncate text-secondary"
+                                        >
+                                            <span *ngIf="cliente.cpf">
+                                                CPF:
+                                                <b>
+                                                    {{
+                                                        cliente.cpf
+                                                            | mask
+                                                                : "000.000.000-00"
+                                                    }}</b
+                                                >
+                                            </span>
+                                            <span *ngIf="cliente.celular">
+                                                Celular:
+                                                <b>
+                                                    {{
+                                                        cliente.celular
+                                                            | mask
+                                                                : "(00) 0 0000-0000||(00) 0000-0000"
+                                                    }}</b
+                                                >
+                                            </span>
+                                            <span *ngIf="cliente.telefone">
+                                                Telefone:
+                                                <b>
+                                                    {{
+                                                        cliente.telefone
+                                                            | mask
+                                                                : "(00) 0 0000-0000||(00) 0000-0000"
+                                                    }}</b
+                                                >
+                                            </span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </ng-container>
+                            <ng-container *ngIf="this.podeCarregarMais">
+                                <div
+                                    class="p-8 sm:p-16 border-t clique-add-cliente font-semibold tracking-tight text-center"
+                                    (click)="this.carregarMais()"
+                                >
+                                    Carregar mais
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+
+                    <!-- No clientes -->
+                    <ng-template #noclientes>
+                        <div
+                            class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center"
+                        >
+                            Nenhum cliente cadastrador <br />
+                            <a
+                                (click)="this.modalNovo()"
+                                class="clique-add-cliente"
+                            >
+                                Clique aqui para cadastrar o primeiro</a
+                            >
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </mat-drawer-content>
+    </mat-drawer-container>
+</div>
