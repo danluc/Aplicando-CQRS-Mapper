@@ -46,16 +46,31 @@
                                 <input
                                     matInput
                                     [autocomplete]="'off'"
-                                    [placeholder]="'Search clientes'"
+                                    [placeholder]="'Pesquisar por cliente'"
+                                    [formControl]="inputPesquisar"
+                                    (keydown.enter)="pesquisarNome()"
                                 />
                             </mat-form-field>
                         </div>
+                        <!-- Buscar cliente button -->
+                        <button
+                            class="ml-4"
+                            mat-flat-button
+                            [color]="'primary'"
+                            (click)="pesquisarNome()"
+                            matTooltip="Pesquisar"
+                        >
+                            <mat-icon
+                                [svgIcon]="'heroicons_outline:search'"
+                            ></mat-icon>
+                        </button>
                         <!-- Add cliente button -->
                         <button
                             class="ml-4"
                             mat-flat-button
                             [color]="'primary'"
                             (click)="modalNovo()"
+                            matTooltip="Adicionar cliente"
                         >
                             <mat-icon
                                 [svgIcon]="'heroicons_outline:plus'"
@@ -177,12 +192,12 @@
                         <div
                             class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center"
                         >
-                            Nenhum cliente cadastrador <br />
+                            Nenhum cliente encontrado <br />
                             <a
                                 (click)="this.modalNovo()"
                                 class="clique-add-cliente"
                             >
-                                Clique aqui para cadastrar o primeiro</a
+                                Clique aqui para cadastrar</a
                             >
                         </div>
                     </ng-template>

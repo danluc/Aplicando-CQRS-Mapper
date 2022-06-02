@@ -8,6 +8,7 @@ import {
     ViewChild,
     ViewEncapsulation,
 } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDrawer } from '@angular/material/sidenav';
 import { MatSort } from '@angular/material/sort';
@@ -22,6 +23,7 @@ import { AuthenticationService } from 'app/core/services/authentication.service'
 import { ClientesControllerService } from 'app/core/services/controllers/clientes-controller.service';
 import { ToastService } from 'app/core/services/toast.service';
 import { Subject } from 'rxjs';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { CadastrarClientesComponent } from '../cadastrar-clientes/cadastrar-clientes.component';
 
 @Component({
@@ -50,6 +52,7 @@ export class ListaContatosComponent implements OnInit, OnDestroy {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     public clienteSelecionado: ClienteDTO;
     public drawerMode: 'side' | 'over';
+    public inputPesquisar: FormControl = new FormControl();
 
     constructor(
         private _matDialog: MatDialog,
@@ -65,12 +68,6 @@ export class ListaContatosComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this._buscarDados();
-        this.matDrawer.openedChange.subscribe((opened) => {
-            if (!opened) {
-                this.clienteSelecionado = null;
-                this._changeDetectorRef.markForCheck();
-            }
-        });
     }
 
     public trackByFn(index: number, item: any): any {
@@ -78,15 +75,11 @@ export class ListaContatosComponent implements OnInit, OnDestroy {
     }
 
     onBackdropClicked(): void {
-        // Go back to the list
         this._router.navigate(['./'], { relativeTo: this._activatedRoute });
-
-        // Mark for check
         this._changeDetectorRef.markForCheck();
     }
 
     ngOnDestroy(): void {
-        // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
     }
@@ -96,10 +89,24 @@ export class ListaContatosComponent implements OnInit, OnDestroy {
         this._buscarDados();
     }
 
+    public pesquisarNome(): void {
+        if (this.inputPesquisar.value.length == 0) {
+            return;
+        }
+        this.filtro.nomeCpf = this.inputPesquisar.value;
+        this._buscarDados();
+        this.inputPesquisar.valueChanges.subscribe((val) => {
+            if (val.length == 0) {
+                this.filtro.nomeCpf = '';
+                this._buscarDados();
+            }
+        });
+    }
+
     private _buscarDados(): void {
         this._fuseLoadingService.show();
         this._clientesControllerService
-            .listar(this.filtro.skip, this.filtro.take)
+            .listar(this.filtro.skip, this.filtro.take, this.filtro.nomeCpf)
             .subscribe(
                 (res) => {
                     if (!res.sucesso) {

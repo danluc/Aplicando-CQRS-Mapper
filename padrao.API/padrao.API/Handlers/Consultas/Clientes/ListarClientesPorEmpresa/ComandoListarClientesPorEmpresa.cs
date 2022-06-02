@@ -26,13 +26,30 @@ namespace padrao.API.Handlers.Consultas.Clientes.ListarClientesPorEmpresa
         {
             try
             {
-                var clientes = await _bancoDBContext.Clientes.Include(e => e.Endereco)
+                var clientes = new List<Models.Clientes>();
+                if (String.IsNullOrEmpty(request.NomeCpf))
+                {
+                    clientes = await _bancoDBContext.Clientes.Include(e => e.Endereco)
                                                         .Include(e => e.Empresa)
                                                         .Where(e => e.Situacao)
-                                                        .OrderByDescending(c => c.Id)
+                                                        .OrderBy(c => c.Nome)
                                                         .Skip(request.Skip)
                                                         .Take(request.Take + 1)
                                                         .ToListAsync();
+                }
+                else
+                {
+                    clientes = await _bancoDBContext.Clientes.Include(e => e.Endereco)
+                                                       .Include(e => e.Empresa)
+                                                       .Where(e => e.Situacao && 
+                                                                (e.Nome.ToUpper().Contains(request.NomeCpf) || e.CPF.Equals(request.NomeCpf))
+                                                              )
+                                                       .OrderBy(c => c.Nome)
+                                                       .Skip(request.Skip)
+                                                       .Take(request.Take + 1)
+                                                       .ToListAsync();
+                }
+                
 
                 var carregarMais = clientes.Count() == request.Take + 1;
 
