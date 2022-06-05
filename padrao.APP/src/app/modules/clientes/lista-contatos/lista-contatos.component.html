@@ -82,7 +82,7 @@
 
                 <!-- clientes list -->
                 <div class="relative">
-                    <ng-container *ngIf="this.dados">
+                    <ng-container *ngIf="this.dados; else noCarregando">
                         <ng-container
                             *ngIf="this.dados.length; else noclientes"
                         >
@@ -199,6 +199,14 @@
                             >
                                 Clique aqui para cadastrar</a
                             >
+                        </div>
+                    </ng-template>
+
+                    <ng-template #noCarregando>
+                        <div
+                            class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center"
+                        >
+                            Carregando...
                         </div>
                     </ng-template>
                 </div>

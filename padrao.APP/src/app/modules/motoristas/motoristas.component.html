@@ -67,7 +67,7 @@
 
                 <!-- motoristas list -->
                 <div class="relative">
-                    <ng-container *ngIf="this.dados">
+                    <ng-container *ngIf="this.dados; else noCarregando">
                         <ng-container *ngIf="this.dados.length; else noDados">
                             <ng-container
                                 *ngFor="
@@ -151,7 +151,7 @@
                             </ng-container>
                             <ng-container *ngIf="this.podeCarregarMais">
                                 <div
-                                    class="p-8 sm:p-16 border-t clique-add-motorista font-semibold tracking-tight text-center"
+                                    class="p-8 sm:p-16 border-t clique-add font-semibold tracking-tight text-center"
                                     (click)="this.carregarMais()"
                                 >
                                     Carregar mais
@@ -168,10 +168,18 @@
                             Nenhum motorista encontrado <br />
                             <a
                                 (click)="this.modalNovo()"
-                                class="clique-add-motorista"
+                                class="clique-add"
                             >
                                 Clique aqui para cadastrar</a
                             >
+                        </div>
+                    </ng-template>
+
+                    <ng-template #noCarregando>
+                        <div
+                            class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center"
+                        >
+                            Carregando...
                         </div>
                     </ng-template>
                 </div>

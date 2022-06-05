@@ -36,7 +36,7 @@ export class ListaContatosComponent implements OnInit, OnDestroy {
     @ViewChild('recentTransactionsTable', { read: MatSort })
     public tabelaOrder: MatSort;
     public tabelaDados: MatTableDataSource<any> = new MatTableDataSource();
-    public dados: Array<ClienteDTO> = [];
+    public dados: Array<ClienteDTO>;
     public tabelaColunas: string[] = [
         'nome',
         'cpf',
@@ -122,9 +122,7 @@ export class ListaContatosComponent implements OnInit, OnDestroy {
                         this.dados = this.dados.concat(...res.clientes);
                     }
                     this.podeCarregarMais = res.carregarMais;
-                    this.tabelaDados.data = this.dados;
                     this.temRegistro = res.clientes.length > 0;
-                    this.tabelaDados.sort = this.tabelaOrder;
                 },
                 (erro) => {
                     this._toastService.mensagemError(

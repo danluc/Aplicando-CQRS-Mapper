@@ -8,7 +8,6 @@
                 autocomplete="off"
                 (keydown)="this.buscarPorCep()"
                 (blur)="this.buscarPorCep()"
-                required
                 mask="00000-000"
             />
             <mat-error *ngIf="this.form.get('cep').hasError('required')">
@@ -21,7 +20,6 @@
                 matInput
                 [formControlName]="'logradouro'"
                 autocomplete="off"
-                required
             />
             <mat-error *ngIf="this.form.get('logradouro').hasError('required')">
                 Campo obrigatório!
@@ -33,7 +31,6 @@
                 matInput
                 [formControlName]="'numero'"
                 autocomplete="off"
-                required
             />
             <mat-error *ngIf="this.form.get('numero').hasError('required')">
                 Campo obrigatório!
@@ -47,7 +44,6 @@
                 matInput
                 [formControlName]="'bairro'"
                 autocomplete="off"
-                required
             />
             <mat-error *ngIf="this.form.get('bairro').hasError('required')">
                 Campo obrigatório!
@@ -59,7 +55,6 @@
                 matInput
                 [formControlName]="'cidade'"
                 autocomplete="off"
-                required
             />
             <mat-error *ngIf="this.form.get('cidade').hasError('required')">
                 Campo obrigatório!
@@ -71,7 +66,6 @@
                 matInput
                 [formControlName]="'uf'"
                 autocomplete="off"
-                required
                 maxlength="2"
             />
             <mat-error *ngIf="this.form.get('uf').hasError('required')">

@@ -17,9 +17,9 @@ import { CadastrarMotoristaComponent } from './cadastrar-motorista/cadastrar-mot
     styleUrls: ['./motoristas.component.scss'],
 })
 export class MotoristasComponent implements OnInit {
-    public dados: Array<MotoristaDTO> = [];
+    public dados: Array<MotoristaDTO>;
     public temRegistro: boolean = false;
-    public filtro: PaginacaoDTO = new PaginacaoDTO(0, 15);
+    public filtro: PaginacaoDTO = new PaginacaoDTO(0, 10);
     public podeCarregarMais: boolean = false;
     public inputPesquisar: FormControl = new FormControl();
 
