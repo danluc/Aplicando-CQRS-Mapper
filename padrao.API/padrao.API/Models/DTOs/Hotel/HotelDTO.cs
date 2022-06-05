@@ -9,6 +9,8 @@ namespace padrao.API.Models.DTOs.Hotel
     {
         public string Nome { get; set; }
         public string Observacao { get; set; }
+        public string Contato { get; set; }
+        public string Telefone { get; set; }
         public string Codigo { get; set; }
         public bool Situacao { get; set; }
         public int EmpresaId { get; set; }

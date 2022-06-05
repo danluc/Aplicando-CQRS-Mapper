@@ -42,6 +42,8 @@ namespace padrao.API.Handlers.Comandos.Hotel.AtualizarHotel
                 }
 
                 dados.Nome = String.IsNullOrEmpty(request.Hotel.Nome) ? dados.Nome : request.Hotel.Nome;
+                dados.Contato = String.IsNullOrEmpty(request.Hotel.Contato) ? dados.Contato : request.Hotel.Contato;
+                dados.Telefone = String.IsNullOrEmpty(request.Hotel.Telefone) ? dados.Telefone : request.Hotel.Telefone;
                 dados.Observacao = String.IsNullOrEmpty(request.Hotel.Observacao) ? dados.Observacao : request.Hotel.Observacao;
                 dados.DataAlteracao = DateTime.Now;
 

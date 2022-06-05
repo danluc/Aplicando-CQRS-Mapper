@@ -31,7 +31,7 @@ export const menuprincipal: FuseNavigationItem[] = [
         title: 'Hotel',
         type: 'basic',
         icon: 'heroicons_outline:office-building',
-        link: '/Hotel',
+        link: '/hotel',
         perfisAcesso: [RoleUsuario.ADMIN, RoleUsuario.USUARIO],
     },
     {

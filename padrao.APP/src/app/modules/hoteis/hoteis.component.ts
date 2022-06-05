@@ -1,57 +1,25 @@
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    LOCALE_ID,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-    ViewEncapsulation,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatDrawer } from '@angular/material/sidenav';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
 import { FuseLoadingBarService } from '@fuse/components/loading-bar';
-import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
-import { ClienteDTO } from 'app/core/models/clientes/cliente-dto';
+import { HotelDTO } from 'app/core/models/hoteis/hotel-dto';
 import { PaginacaoDTO } from 'app/core/models/paginacao-dto';
 import { VerbosHTTP } from 'app/core/models/usuarios/enums/verbos-http';
 import { AuthenticationService } from 'app/core/services/authentication.service';
-import { ClientesControllerService } from 'app/core/services/controllers/clientes-controller.service';
+import { HotelControllerService } from 'app/core/services/controllers/hotel-controller.service';
 import { ToastService } from 'app/core/services/toast.service';
-import { Subject } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
-import { CadastrarClientesComponent } from '../cadastrar-clientes/cadastrar-clientes.component';
+import { CadastrarHotelComponent } from './cadastrar-hotel/cadastrar-hotel.component';
 
 @Component({
-    selector: 'app-lista-contatos',
-    templateUrl: './lista-contatos.component.html',
-    styleUrls: ['./lista-contatos.component.scss'],
-    encapsulation: ViewEncapsulation.None,
+    selector: 'app-hoteis',
+    templateUrl: './hoteis.component.html',
+    styleUrls: ['./hoteis.component.scss'],
 })
-export class ListaContatosComponent implements OnInit, OnDestroy {
-    @ViewChild('recentTransactionsTable', { read: MatSort })
-    public tabelaOrder: MatSort;
-    public tabelaDados: MatTableDataSource<any> = new MatTableDataSource();
-    public dados: Array<ClienteDTO>;
-    public tabelaColunas: string[] = [
-        'nome',
-        'cpf',
-        'celular',
-        'telefone',
-        'acoes',
-    ];
-
+export class HoteisComponent implements OnInit {
+    public dados: Array<HotelDTO>;
     public temRegistro: boolean = false;
-    public filtro: PaginacaoDTO = new PaginacaoDTO(0, 15);
+    public filtro: PaginacaoDTO = new PaginacaoDTO(0, 10);
     public podeCarregarMais: boolean = false;
-    @ViewChild('matDrawer', { static: true }) matDrawer: MatDrawer;
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
-    public clienteSelecionado: ClienteDTO;
-    public drawerMode: 'side' | 'over';
     public inputPesquisar: FormControl = new FormControl();
 
     constructor(
@@ -59,11 +27,7 @@ export class ListaContatosComponent implements OnInit, OnDestroy {
         private _toastService: ToastService,
         private _fuseLoadingService: FuseLoadingBarService,
         private _authenticationService: AuthenticationService,
-        private _clientesControllerService: ClientesControllerService,
-        private _activatedRoute: ActivatedRoute,
-        private _changeDetectorRef: ChangeDetectorRef,
-        private _router: Router,
-        private _fuseMediaWatcherService: FuseMediaWatcherService
+        private _hotelControllerService: HotelControllerService
     ) {}
 
     ngOnInit() {
@@ -72,16 +36,6 @@ export class ListaContatosComponent implements OnInit, OnDestroy {
 
     public trackByFn(index: number, item: any): any {
         return item.nome || index;
-    }
-
-    onBackdropClicked(): void {
-        this._router.navigate(['./'], { relativeTo: this._activatedRoute });
-        this._changeDetectorRef.markForCheck();
-    }
-
-    ngOnDestroy(): void {
-        this._unsubscribeAll.next();
-        this._unsubscribeAll.complete();
     }
 
     public carregarMais(): void {
@@ -105,7 +59,7 @@ export class ListaContatosComponent implements OnInit, OnDestroy {
 
     private _buscarDados(): void {
         this._fuseLoadingService.show();
-        this._clientesControllerService
+        this._hotelControllerService
             .listar(this.filtro.skip, this.filtro.take, this.filtro.nomeCpf)
             .subscribe(
                 (res) => {
@@ -118,12 +72,12 @@ export class ListaContatosComponent implements OnInit, OnDestroy {
                     }
                     this._fuseLoadingService.hide();
                     if (this.filtro.skip === 0) {
-                        this.dados = res.clientes;
+                        this.dados = res.hotel;
                     } else {
-                        this.dados = this.dados.concat(...res.clientes);
+                        this.dados = this.dados.concat(...res.hotel);
                     }
                     this.podeCarregarMais = res.carregarMais;
-                    this.temRegistro = res.clientes.length > 0;
+                    this.temRegistro = res.hotel.length > 0;
                 },
                 (erro) => {
                     this._toastService.mensagemError(
@@ -137,7 +91,7 @@ export class ListaContatosComponent implements OnInit, OnDestroy {
     }
 
     public modalNovo(): void {
-        const dialogRef = this._matDialog.open(CadastrarClientesComponent, {
+        const dialogRef = this._matDialog.open(CadastrarHotelComponent, {
             width: window.innerWidth < 600 ? '95%' : 'auto',
             maxWidth: window.innerWidth < 600 ? '99vw' : 'auto',
             autoFocus: false,
@@ -145,6 +99,25 @@ export class ListaContatosComponent implements OnInit, OnDestroy {
             data: {
                 verbo: VerbosHTTP.POST,
                 dados: {},
+            },
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+                this._buscarDados();
+            }
+        });
+    }
+
+    public modalAlterar(item: HotelDTO): void {
+        const dialogRef = this._matDialog.open(CadastrarHotelComponent, {
+            width: window.innerWidth < 600 ? '95%' : 'auto',
+            maxWidth: window.innerWidth < 600 ? '99vw' : 'auto',
+            autoFocus: false,
+            disableClose: true,
+            data: {
+                verbo: VerbosHTTP.PUT,
+                dados: item,
             },
         });
 

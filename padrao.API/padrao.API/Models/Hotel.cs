@@ -15,6 +15,8 @@ namespace padrao.API.Models
 
         public string Nome { get; set; }
         public string Observacao { get; set; }
+        public string Contato { get; set; }
+        public string Telefone { get; set; }
         public string Codigo { get; set; }
         public bool Situacao { get; set; }
         [ForeignKey("Empresas")]

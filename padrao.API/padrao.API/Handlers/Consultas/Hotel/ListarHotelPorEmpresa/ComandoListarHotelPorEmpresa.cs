@@ -26,13 +26,32 @@ namespace padrao.API.Handlers.Consultas.Hotel.ListarHotelPorEmpresa
         {
             try
             {
-                var dados = await _bancoDBContext.Hotel.AsNoTracking().Include(e => e.Empresa).Include(e => e.Endereco)
-                                                                                        .Where(e => e.EmpresaId == request.EmpresaId).ToListAsync();
+                var dados = new List<Models.Hotel>();
+                if (String.IsNullOrEmpty(request.NomeCpf))
+                {
+                    dados = await _bancoDBContext.Hotel.Include(e => e.Empresa).Include(e => e.Endereco)
+                                                        .Where(e => e.Situacao)
+                                                        .OrderBy(c => c.Nome)
+                                                        .Skip(request.Skip)
+                                                        .Take(request.Take + 1)
+                                                        .ToListAsync();
+                }
+                else
+                {
+                    dados = await _bancoDBContext.Hotel.Include(e => e.Empresa).Include(e => e.Endereco)
+                                                       .Where(e => e.Situacao && (e.Nome.ToUpper().Contains(request.NomeCpf)))
+                                                       .OrderBy(c => c.Nome)
+                                                       .Skip(request.Skip)
+                                                       .Take(request.Take + 1)
+                                                       .ToListAsync();
+                }
+
 
                 return new ResultadoListarHotelPorEmpresa
                 {
                     Hotel = _mapper.Map<List<HotelDTO>>(dados),
-                    Sucesso = true
+                    Sucesso = true,
+                    CarregarMais = dados.Count() == request.Take + 1
                 };
             }
             catch (Exception ex)

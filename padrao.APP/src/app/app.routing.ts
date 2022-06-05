@@ -98,6 +98,13 @@ export const appRoutes: Route[] = [
                         (m) => m.MotoristasModule
                     ),
             },
+            {
+                path: 'hotel',
+                loadChildren: () =>
+                    import('app/modules/hoteis/hoteis.module').then(
+                        (m) => m.HoteisModule
+                    ),
+            },
         ],
     },
 ];
