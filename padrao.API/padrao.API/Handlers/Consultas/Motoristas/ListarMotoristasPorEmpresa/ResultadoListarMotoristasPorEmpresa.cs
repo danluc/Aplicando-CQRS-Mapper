@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace padrao.API.Handlers.Consultas.Motoristas.ListarMotoristasPorEmpresa
 {
-    public class ResultadoListarMotoristasPorEmpresa : ResultadoControllerDTO
+    public class ResultadoListarMotoristasPorEmpresa : ResultadoPaginacaoDTO
     {
         public List<MotoristaDTO> Motoristas { get; set; }
     }

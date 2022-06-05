@@ -26,11 +26,31 @@ namespace padrao.API.Handlers.Consultas.Motoristas.ListarMotoristasPorEmpresa
         {
             try
             {
-                var motoristas = await _bancoDBContext.Motoristas.Include(e => e.Empresa).Where(e => e.Situacao).ToListAsync();
+                var dados = new List<Models.Motoristas>();
+                if (String.IsNullOrEmpty(request.NomeCpf))
+                {
+                    dados = await _bancoDBContext.Motoristas.Include(e => e.Empresa)
+                                                        .Where(e => e.Situacao)
+                                                        .OrderBy(c => c.Nome)
+                                                        .Skip(request.Skip)
+                                                        .Take(request.Take + 1)
+                                                        .ToListAsync();
+                }
+                else
+                {
+                    dados = await _bancoDBContext.Motoristas.Include(e => e.Empresa)
+                                                       .Where(e => e.Situacao && (e.Nome.ToUpper().Contains(request.NomeCpf)))
+                                                       .OrderBy(c => c.Nome)
+                                                       .Skip(request.Skip)
+                                                       .Take(request.Take + 1)
+                                                       .ToListAsync();
+                }
+
                 return new ResultadoListarMotoristasPorEmpresa
                 {
-                    Motoristas = _mapper.Map<List<MotoristaDTO>>(motoristas),
-                    Sucesso = true
+                    Motoristas = _mapper.Map<List<MotoristaDTO>>(dados),
+                    Sucesso = true,
+                    CarregarMais = dados.Count() == request.Take + 1
                 };
             }
             catch (Exception ex)

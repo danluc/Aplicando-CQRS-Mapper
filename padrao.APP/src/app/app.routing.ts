@@ -91,6 +91,13 @@ export const appRoutes: Route[] = [
                         (m) => m.ClientesModule
                     ),
             },
+            {
+                path: 'motoristas',
+                loadChildren: () =>
+                    import('app/modules/motoristas/motoristas.module').then(
+                        (m) => m.MotoristasModule
+                    ),
+            },
         ],
     },
 ];

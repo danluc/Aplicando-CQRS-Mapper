@@ -26,10 +26,10 @@ namespace padrao.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("")]
-        public async Task<ActionResult> Get()
+        [HttpGet("{skip}/{take}/{nome?}")]
+        public async Task<ActionResult> Get(int skip, int take, string nome)
         {
-            var dados = await _mediator.Send(new ParametroListarMotoristasPorEmpresa(this.RetornarIdEmpresaDoToken()));
+            var dados = await _mediator.Send(new ParametroListarMotoristasPorEmpresa(this.RetornarIdEmpresaDoToken(), skip, take, nome));
             if (!dados.Sucesso)
                 return BadRequest($"{dados.Mensagem}");
 

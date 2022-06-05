@@ -39,7 +39,7 @@ export const menuprincipal: FuseNavigationItem[] = [
         title: 'Motoristas',
         type: 'basic',
         icon: 'heroicons_outline:identification',
-        link: '/Motoristas',
+        link: '/motoristas',
         perfisAcesso: [RoleUsuario.ADMIN, RoleUsuario.USUARIO],
     },
     {

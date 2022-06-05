@@ -50,14 +50,11 @@ namespace padrao.API.Handlers.Consultas.Clientes.ListarClientesPorEmpresa
                                                        .ToListAsync();
                 }
                 
-
-                var carregarMais = clientes.Count() == request.Take + 1;
-
                 return new ResultadoListarClientesPorEmpresa
                 {
                     Clientes = _mapper.Map<List<ClienteDTO>>(clientes),
                     Sucesso = true,
-                    CarregarMais = carregarMais
+                    CarregarMais = clientes.Count() == request.Take + 1
                 };
             }
             catch (Exception ex)
