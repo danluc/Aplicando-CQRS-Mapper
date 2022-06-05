@@ -71,7 +71,7 @@ export class ListaContatosComponent implements OnInit, OnDestroy {
     }
 
     public trackByFn(index: number, item: any): any {
-        return item.id || index;
+        return item.nome || index;
     }
 
     onBackdropClicked(): void {
@@ -145,25 +145,6 @@ export class ListaContatosComponent implements OnInit, OnDestroy {
             data: {
                 verbo: VerbosHTTP.POST,
                 dados: {},
-            },
-        });
-
-        dialogRef.afterClosed().subscribe((result) => {
-            if (result) {
-                this._buscarDados();
-            }
-        });
-    }
-
-    public modalAlterar(item: ClienteDTO): void {
-        const dialogRef = this._matDialog.open(CadastrarClientesComponent, {
-            width: window.innerWidth < 600 ? '95%' : 'auto',
-            maxWidth: window.innerWidth < 600 ? '99vw' : 'auto',
-            autoFocus: false,
-            disableClose: true,
-            data: {
-                verbo: VerbosHTTP.PUT,
-                dados: item,
             },
         });
 

@@ -51,6 +51,7 @@ namespace padrao.API.Handlers.Comandos.Clientes.AtualizarCliente
                 hasCliente.Telefone = String.IsNullOrEmpty(request.Cliente.Telefone) ? hasCliente.Telefone : request.Cliente.Telefone;
                 hasCliente.CPF = String.IsNullOrEmpty(request.Cliente.CPF) ? hasCliente.CPF : request.Cliente.CPF;
                 hasCliente.Email = String.IsNullOrEmpty(request.Cliente.Email) ? hasCliente.Email : request.Cliente.Email;
+                hasCliente.DataNascimento = String.IsNullOrEmpty(request.Cliente.DataNascimento.ToString()) ? hasCliente.DataNascimento : request.Cliente.DataNascimento;
                 hasCliente.DataAlteracao = DateTime.Now;
 
                 _bancoDBContext.Update(hasCliente);

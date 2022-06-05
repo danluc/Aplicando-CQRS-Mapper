@@ -46,7 +46,7 @@ export const menuprincipal: FuseNavigationItem[] = [
         id: 'onibus',
         title: 'Ônibus/Carros',
         type: 'basic',
-        icon: 'heroicons_outline:flag',
+        icon: 'heroicons_outline:truck',
         link: '/onibus',
         perfisAcesso: [RoleUsuario.ADMIN, RoleUsuario.USUARIO],
     },

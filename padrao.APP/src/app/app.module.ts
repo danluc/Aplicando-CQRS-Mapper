@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ExtraOptions, PreloadAllModules, RouterModule } from '@angular/router';
@@ -18,8 +18,11 @@ import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { PipesModule } from './core/pipe/pipes.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
+registerLocaleData(localePt);
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
@@ -51,5 +54,6 @@ const routerConfig: ExtraOptions = {
         MarkdownModule.forRoot({}),
     ],
     bootstrap: [AppComponent],
+    providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],
 })
 export class AppModule {}
