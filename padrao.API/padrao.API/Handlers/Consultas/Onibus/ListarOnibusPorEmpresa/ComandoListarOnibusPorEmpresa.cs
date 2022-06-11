@@ -26,11 +26,31 @@ namespace padrao.API.Handlers.Consultas.Onibus.ListarOnibusPorEmpresa
         {
             try
             {
-                var dados = await _bancoDBContext.Onibus.Include(e => e.Empresa).Where(e => e.Situacao).ToListAsync();
+                var dados = new List<Models.Onibus>();
+                if (String.IsNullOrEmpty(request.NomeCpf))
+                {
+                    dados = await _bancoDBContext.Onibus.Include(e => e.Empresa)
+                                                        .Where(e => e.Situacao)
+                                                        .OrderBy(c => c.Nome)
+                                                        .Skip(request.Skip)
+                                                        .Take(request.Take + 1)
+                                                        .ToListAsync();
+                }
+                else
+                {
+                    dados = await _bancoDBContext.Onibus.Include(e => e.Empresa)
+                                                       .Where(e => e.Situacao && (e.Nome.ToUpper().Contains(request.NomeCpf)))
+                                                       .OrderBy(c => c.Nome)
+                                                       .Skip(request.Skip)
+                                                       .Take(request.Take + 1)
+                                                       .ToListAsync();
+                }
+
                 return new ResultadoListarOnibusPorEmpresa
                 {
                     Onibus = _mapper.Map<List<OnibusDTO>>(dados),
-                    Sucesso = true
+                    Sucesso = true,
+                    CarregarMais = dados.Count() == request.Take + 1
                 };
             }
             catch (Exception ex)

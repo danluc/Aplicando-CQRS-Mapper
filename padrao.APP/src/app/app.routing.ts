@@ -105,6 +105,13 @@ export const appRoutes: Route[] = [
                         (m) => m.HoteisModule
                     ),
             },
+            {
+                path: 'carros',
+                loadChildren: () =>
+                    import('app/modules/onibus/onibus.module').then(
+                        (m) => m.OnibusModule
+                    ),
+            },
         ],
     },
 ];

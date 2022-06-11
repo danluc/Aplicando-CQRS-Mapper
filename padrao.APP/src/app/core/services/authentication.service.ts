@@ -32,7 +32,7 @@ export class AuthenticationService {
 
     private setUser(user: UsuarioDTO): void {
         sessionStorage.setItem('currentUser', JSON.stringify(user));
-        localStorage.setItem('accessToken', user.token);
+        sessionStorage.setItem('accessToken', user.token);
         this._currentUserSubject.next(user);
     }
 
@@ -49,7 +49,7 @@ export class AuthenticationService {
 
     public logout(): void {
         sessionStorage.removeItem('currentUser');
-        localStorage.clear();
+        sessionStorage.clear();
         sessionStorage.clear();
         this._currentUserSubject.next(null);
     }
