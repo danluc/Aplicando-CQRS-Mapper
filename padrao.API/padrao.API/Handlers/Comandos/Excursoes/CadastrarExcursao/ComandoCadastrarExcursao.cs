@@ -33,6 +33,7 @@ namespace padrao.API.Handlers.Comandos.Excursoes.CadastrarExcursao
                 request.Excursao.EnderecoDestinoId = destino.Id;
                 request.Excursao.EnderecoSaidaId = saida.Id;
                 request.Excursao.UsuarioId = request.UsuarioId;
+                request.Excursao.Situacao = true;
                 request.Excursao.Codigo = GerarCodigoHelper.GerarCodigo();
                 var dados = _mapper.Map<Models.Excursoes>(request.Excursao);
                 await _bancoDBContext.AddAsync(dados);

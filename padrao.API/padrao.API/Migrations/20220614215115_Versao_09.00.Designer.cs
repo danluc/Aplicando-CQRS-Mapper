@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using padrao.API.Data;
 
 namespace padrao.API.Migrations
 {
     [DbContext(typeof(BancoDBContext))]
-    partial class BancoDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220614215115_Versao_09.00")]
+    partial class Versao_0900
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
