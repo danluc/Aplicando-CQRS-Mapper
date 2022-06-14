@@ -43,7 +43,6 @@ namespace padrao.API.Handlers.Comandos.Hotel.CadastrarHotel
                 request.Hotel.EmpresaId = request.EmpresaId;
                 request.Hotel.Codigo = GerarCodigoHelper.GerarCodigo();
                 var hotel = _mapper.Map<Models.Hotel>(request.Hotel);
-                hotel.SetSituacao();
                 hotel.DataCadastro = DateTime.Now;
                 await _bancoDBContext.AddAsync(hotel);
                 await _bancoDBContext.SaveChangesAsync(cancellationToken);
