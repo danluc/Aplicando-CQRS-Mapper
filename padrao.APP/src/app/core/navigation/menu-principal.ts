@@ -50,4 +50,12 @@ export const menuprincipal: FuseNavigationItem[] = [
         link: '/carros',
         perfisAcesso: [RoleUsuario.ADMIN, RoleUsuario.USUARIO],
     },
+    {
+        id: 'excursoes',
+        title: 'Excursões',
+        type: 'basic',
+        icon: 'heroicons_outline:globe',
+        link: '/excursoes',
+        perfisAcesso: [RoleUsuario.ADMIN, RoleUsuario.USUARIO],
+    },
 ];

@@ -1,0 +1,188 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
+    <div class="flex-auto h-full bg-card dark:bg-transparent">
+        <div class="flex flex-col">
+            <!-- Main -->
+            <div class="flex-auto">
+                <!-- Header -->
+                <div
+                    class="flex flex-col sm:flex-row md:flex-col flex-auto justify-between py-8 px-6 md:px-8 border-b"
+                >
+                    <!-- Title -->
+                    <div>
+                        <div
+                            class="text-4xl font-extrabold tracking-tight leading-none"
+                        >
+                            Excursões
+                        </div>
+                    </div>
+
+                    <!-- Main actions -->
+                    <div class="flex items-center mt-4 sm:mt-0 md:mt-4">
+                        <!-- Search -->
+                        <div class="flex-auto">
+                            <mat-form-field
+                                class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded w-full min-w-50"
+                            >
+                                <mat-icon
+                                    class="icon-size-5"
+                                    matPrefix
+                                    [svgIcon]="'heroicons_solid:search'"
+                                ></mat-icon>
+                                <input
+                                    matInput
+                                    [autocomplete]="'off'"
+                                    [placeholder]="'Pesquisar por excursão'"
+                                    [formControl]="inputPesquisar"
+                                    (keydown.enter)="pesquisarNome()"
+                                />
+                            </mat-form-field>
+                        </div>
+                        <!-- Buscar excursão button -->
+                        <button
+                            class="ml-4"
+                            mat-flat-button
+                            [color]="'accent'"
+                            (click)="pesquisarNome()"
+                            matTooltip="Pesquisar"
+                        >
+                            <mat-icon
+                                [svgIcon]="'heroicons_outline:search'"
+                            ></mat-icon>
+                        </button>
+                        <!-- Add excursão button -->
+                        <button
+                            class="ml-4"
+                            mat-flat-button
+                            [color]="'primary'"
+                            matTooltip="Adicionar excursão"
+                        >
+                            <mat-icon
+                                [svgIcon]="'heroicons_outline:plus'"
+                            ></mat-icon>
+                            <span class="ml-2 mr-1">Add</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- excursão list -->
+                <div class="relative">
+                    <ng-container *ngIf="this.dados; else noCarregando">
+                        <ng-container *ngIf="this.dados.length; else noDados">
+                            <ng-container
+                                *ngFor="
+                                    let item of this.dados;
+                                    let i = index;
+                                    trackBy: trackByFn
+                                "
+                            >
+                                <!-- Group -->
+                                <ng-container
+                                    *ngIf="
+                                        i === 0 ||
+                                        item.nome.charAt(0) !==
+                                            this.dados[i - 1].nome.charAt(0)
+                                    "
+                                >
+                                    <div
+                                        class="z-10 sticky top-0 -mt-px px-6 py-1 md:px-8 border-t border-b font-medium uppercase text-secondary bg-gray-50 dark:bg-gray-900"
+                                    >
+                                        {{ item.nome.charAt(0) }}
+                                    </div>
+                                </ng-container>
+                                <!-- item -->
+                                <a
+                                    class="z-20 flex items-center px-6 py-4 md:px-8 cursor-pointer border-b"
+                                    [ngClass]="{
+                                        'hover:bg-gray-100 dark:hover:bg-hover':
+                                            !itemselecionado ||
+                                            itemselecionado.codigo !==
+                                                item.codigo,
+                                        'bg-primary-50 dark:bg-hover':
+                                            itemselecionado &&
+                                            itemselecionado.codigo ===
+                                                item.codigo
+                                    }"
+                                    (click)="this.modalAlterar(item)"
+                                >
+                                    <div
+                                        class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden"
+                                    >
+                                        <ng-container>
+                                            <div
+                                                class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200"
+                                            >
+                                                {{ item.nome.charAt(0) }}
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                    <div class="min-w-0 ml-4">
+                                        <div
+                                            class="font-medium leading-5 truncate"
+                                        >
+                                            {{ item.nome }}
+                                        </div>
+                                        <div
+                                            class="leading-5 truncate text-secondary"
+                                        >
+                                            <span
+                                                *ngIf="item.dataIncio"
+                                                class="mr-5"
+                                            >
+                                                Data excursão:
+                                                <b>
+                                                    {{
+                                                        item.dataIncio
+                                                            | date: "dd/MM/yyyy"
+                                                    }}</b
+                                                >
+                                            </span>
+                                            <span *ngIf="item.enderecoDestino">
+                                                Destino:
+                                                <b
+                                                    >{{
+                                                        item.enderecoDestino
+                                                            .cidade
+                                                    }}/{{
+                                                        item.enderecoDestino.uf
+                                                    }}</b
+                                                >
+                                            </span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </ng-container>
+                            <ng-container *ngIf="this.podeCarregarMais">
+                                <div
+                                    class="p-8 sm:p-16 border-t clique-add font-semibold tracking-tight text-center"
+                                    (click)="this.carregarMais()"
+                                >
+                                    Carregar mais
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+
+                    <!-- No excursão -->
+                    <ng-template #noDados>
+                        <div
+                            class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center"
+                        >
+                            Nenhum item encontrado <br />
+                            <a class="clique-add">
+                                Clique aqui para cadastrar</a
+                            >
+                        </div>
+                    </ng-template>
+
+                    <ng-template #noCarregando>
+                        <div
+                            class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center"
+                        >
+                            Carregando...
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

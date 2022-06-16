@@ -112,6 +112,13 @@ export const appRoutes: Route[] = [
                         (m) => m.OnibusModule
                     ),
             },
+            {
+                path: 'excursoes',
+                loadChildren: () =>
+                    import('app/modules/excursoes/excursoes.module').then(
+                        (m) => m.ExcursoesModule
+                    ),
+            },
         ],
     },
 ];
