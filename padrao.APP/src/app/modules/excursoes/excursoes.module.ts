@@ -15,7 +15,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { PipesModule } from 'app/core/pipe/pipes.module';
 import { FuseFindByKeyPipeModule } from '@fuse/pipes/find-by-key';
-import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
+import {
+    MatNativeDateModule,
+    MatRippleModule,
+    MAT_DATE_LOCALE,
+} from '@angular/material/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
@@ -30,11 +34,18 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxMaskModule } from 'ngx-mask';
 import { ExcursoesComponent } from './excursoes.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { CadastrarExcursaoComponent } from './cadastrar-excursao/cadastrar-excursao.component';
+import { ListaExcursoesComponent } from './lista-excursoes/lista-excursoes.component';
 
 const exampleRoutes: Route[] = [
     {
         path: '',
         component: ExcursoesComponent,
+        children: [
+            { path: '', component: ListaExcursoesComponent },
+            { path: 'adicionar', component: CadastrarExcursaoComponent },
+        ],
     },
 ];
 
@@ -70,7 +81,13 @@ const exampleRoutes: Route[] = [
         MatAutocompleteModule,
         MatRadioModule,
         MatRippleModule,
+        MatStepperModule,
     ],
-    declarations: [ExcursoesComponent],
+    declarations: [
+        ExcursoesComponent,
+        CadastrarExcursaoComponent,
+        ListaExcursoesComponent,
+    ],
+    providers: [{ provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }],
 })
 export class ExcursoesModule {}
