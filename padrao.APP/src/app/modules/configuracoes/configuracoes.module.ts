@@ -29,6 +29,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ComponentesModule } from '../components/componentes.module';
 import { InserirImagemComponent } from './empresa/inserir-imagem/inserir-imagem.component';
 import { CadastrarUsuarioComponent } from './usuarios/cadastrar-usuario/cadastrar-usuario.component';
+import { ContratoViagemComponent } from './contrato-viagem/contrato-viagem.component';
 
 const exampleRoutes: Route[] = [
     {
@@ -72,6 +73,7 @@ const exampleRoutes: Route[] = [
         PlanosComponent,
         InserirImagemComponent,
         CadastrarUsuarioComponent,
+        ContratoViagemComponent,
     ],
 })
 export class ConfiguracoesModule {}

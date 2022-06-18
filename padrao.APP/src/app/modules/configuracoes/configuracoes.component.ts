@@ -47,6 +47,12 @@ export class ConfiguracoesComponent implements OnInit {
                 description: 'Usuários da sua empresa',
             },
             {
+                id: 'contrato',
+                icon: 'heroicons_outline:user-group',
+                title: 'Contrato de viagem',
+                description: 'Contrato padrão da sua empresa',
+            },
+            {
                 id: 'plan-billing',
                 icon: 'heroicons_outline:credit-card',
                 title: 'Plano',
