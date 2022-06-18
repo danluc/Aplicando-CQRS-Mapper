@@ -37,6 +37,7 @@ import { ExcursoesComponent } from './excursoes.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { CadastrarExcursaoComponent } from './cadastrar-excursao/cadastrar-excursao.component';
 import { ListaExcursoesComponent } from './lista-excursoes/lista-excursoes.component';
+import { MatCurrencyFormatModule } from 'mat-currency-format';
 
 const exampleRoutes: Route[] = [
     {
@@ -82,6 +83,7 @@ const exampleRoutes: Route[] = [
         MatRadioModule,
         MatRippleModule,
         MatStepperModule,
+        MatCurrencyFormatModule,
     ],
     declarations: [
         ExcursoesComponent,

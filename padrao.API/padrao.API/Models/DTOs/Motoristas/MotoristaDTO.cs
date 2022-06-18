@@ -7,6 +7,7 @@ namespace padrao.API.Models.DTOs.Motoristas
 {
     public class MotoristaDTO
     {
+        public int Id { get; set; }
         public string Nome { get; set; }
         public string Telefone { get; set; }
         public string Celular { get; set; }

@@ -1,34 +1,19 @@
 <div class="flex flex-col flex-auto min-w-0">
-    <!-- Header -->
+    <!-- Header --
     <div
         class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent"
     >
         <div class="flex-1 min-w-0">
-            <!-- Breadcrumbs -->
-            <div class="flex flex-wrap items-center font-medium">
-                <div>
-                    <a class="whitespace-nowrap text-primary-500"
-                        >User Interface</a
-                    >
-                </div>
-                <div class="flex items-center ml-1 whitespace-nowrap">
-                    <mat-icon
-                        class="icon-size-5 text-secondary"
-                        [svgIcon]="'heroicons_solid:chevron-right'"
-                    ></mat-icon>
-                    <a class="ml-1 text-primary-500">Forms</a>
-                </div>
-            </div>
-            <!-- Title -->
+            <!-- Title 
             <div class="mt-2">
                 <h2
                     class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate"
                 >
-                    Form Wizards
+                    Excursão
                 </h2>
             </div>
         </div>
-    </div>
+    </div>-->
 
     <!-- Main -->
     <div class="flex-auto p-6 sm:p-10">
@@ -53,12 +38,15 @@
                                     matInput
                                     [formControlName]="'nome'"
                                     [placeholder]="'Título da excursão'"
+                                    autocomplete="off"
                                     required
                                 />
                             </mat-form-field>
                         </div>
 
-                        <div class="flex flex-row items-center justify-center">
+                        <div
+                            class="flex flex-wrap w-full items-center justify-center"
+                        >
                             <mat-form-field
                                 appearance="outline"
                                 class="fuse-mat-no-subscript w-full"
@@ -95,10 +83,12 @@
                             </mat-form-field>
                         </div>
 
-                        <div class="flex flex-row items-center justify-center">
+                        <div
+                            class="flex flex-wrap w-full items-center justify-between"
+                        >
                             <mat-form-field
                                 appearance="outline"
-                                class="fuse-mat-no-subscript w-2/3 mr-4 sm:w-2/5"
+                                class="fuse-mat-no-subscript w-full sm:w-4/12"
                             >
                                 <mat-label>Data de saída</mat-label>
                                 <input
@@ -117,7 +107,7 @@
                             </mat-form-field>
                             <mat-form-field
                                 appearance="outline"
-                                class="fuse-mat-no-subscript mr-4 sm:w-10-p"
+                                class="fuse-mat-no-subscript w-15-p"
                             >
                                 <mat-label>Hora saída</mat-label>
                                 <input
@@ -130,7 +120,7 @@
                             </mat-form-field>
                             <mat-form-field
                                 appearance="outline"
-                                class="fuse-mat-no-subscript w-2/3 mr-4 sm:w-2/5"
+                                class="fuse-mat-no-subscript w-full sm:w-4/12"
                             >
                                 <mat-label>Data de retorno</mat-label>
                                 <input
@@ -148,7 +138,7 @@
                             </mat-form-field>
                             <mat-form-field
                                 appearance="outline"
-                                class="fuse-mat-no-subscript mr-4 sm:w-10-p"
+                                class="fuse-mat-no-subscript w-15-p"
                             >
                                 <mat-label>Hora retorno</mat-label>
                                 <input
@@ -184,9 +174,161 @@
                         [stepControl]="this.form.get('step2')"
                         #horizontalStepperStep2
                     >
-                        <ng-template matStepLabel>Profile</ng-template>
+                        <ng-template matStepLabel>Endereços</ng-template>
 
-                        <div class="flex justify-end">
+                        <p class="font-bold mb-2">Endereço de destino:</p>
+                        <form [formGroup]="formDestino">
+                            <div
+                                class="flex flex-row items-center justify-center"
+                            >
+                                <mat-form-field
+                                    class="fuse-mat-no-subscript w-full mr-4 sm:w-35"
+                                >
+                                    <mat-label>CEP</mat-label>
+                                    <input
+                                        matInput
+                                        [formControlName]="'cep'"
+                                        autocomplete="off"
+                                        (keydown)="this.buscarPorCepDestino()"
+                                        (blur)="this.buscarPorCepDestino()"
+                                        mask="00000-000"
+                                    />
+                                </mat-form-field>
+                                <mat-form-field
+                                    class="fuse-mat-no-subscript w-full mr-4 sm:w-35"
+                                >
+                                    <mat-label>Logradouro</mat-label>
+                                    <input
+                                        matInput
+                                        [formControlName]="'logradouro'"
+                                        autocomplete="off"
+                                    />
+                                </mat-form-field>
+                                <mat-form-field
+                                    class="fuse-mat-no-subscript w-full sm:w-35"
+                                >
+                                    <mat-label>Nº</mat-label>
+                                    <input
+                                        matInput
+                                        [formControlName]="'numero'"
+                                        autocomplete="off"
+                                    />
+                                </mat-form-field>
+                            </div>
+                            <div
+                                class="flex flex-row items-center justify-center"
+                            >
+                                <mat-form-field
+                                    class="fuse-mat-no-subscript w-full mr-4 sm:w-25"
+                                >
+                                    <mat-label>Bairro</mat-label>
+                                    <input
+                                        matInput
+                                        [formControlName]="'bairro'"
+                                        autocomplete="off"
+                                    />
+                                </mat-form-field>
+                                <mat-form-field
+                                    class="fuse-mat-no-subscript w-full mr-4 sm:w-25"
+                                >
+                                    <mat-label>Cidade</mat-label>
+                                    <input
+                                        matInput
+                                        [formControlName]="'cidade'"
+                                        autocomplete="off"
+                                    />
+                                </mat-form-field>
+                                <mat-form-field
+                                    class="fuse-mat-no-subscript w-full sm:w-25"
+                                >
+                                    <mat-label>UF</mat-label>
+                                    <input
+                                        matInput
+                                        [formControlName]="'uf'"
+                                        autocomplete="off"
+                                        maxlength="2"
+                                    />
+                                </mat-form-field>
+                            </div>
+                        </form>
+
+                        <p class="font-bold mb-2 mt-2">Endereço de saída:</p>
+                        <form [formGroup]="formSaida">
+                            <div
+                                class="flex flex-row items-center justify-center"
+                            >
+                                <mat-form-field
+                                    class="fuse-mat-no-subscript w-full mr-4 sm:w-35"
+                                >
+                                    <mat-label>CEP</mat-label>
+                                    <input
+                                        matInput
+                                        [formControlName]="'cep'"
+                                        autocomplete="off"
+                                        (keydown)="this.buscarPorCepSaida()"
+                                        (blur)="this.buscarPorCepSaida()"
+                                        mask="00000-000"
+                                    />
+                                </mat-form-field>
+                                <mat-form-field
+                                    class="fuse-mat-no-subscript w-full mr-4 sm:w-35"
+                                >
+                                    <mat-label>Logradouro</mat-label>
+                                    <input
+                                        matInput
+                                        [formControlName]="'logradouro'"
+                                        autocomplete="off"
+                                    />
+                                </mat-form-field>
+                                <mat-form-field
+                                    class="fuse-mat-no-subscript w-full sm:w-35"
+                                >
+                                    <mat-label>Nº</mat-label>
+                                    <input
+                                        matInput
+                                        [formControlName]="'numero'"
+                                        autocomplete="off"
+                                    />
+                                </mat-form-field>
+                            </div>
+                            <div
+                                class="flex flex-row items-center justify-center"
+                            >
+                                <mat-form-field
+                                    class="fuse-mat-no-subscript w-full mr-4 sm:w-25"
+                                >
+                                    <mat-label>Bairro</mat-label>
+                                    <input
+                                        matInput
+                                        [formControlName]="'bairro'"
+                                        autocomplete="off"
+                                    />
+                                </mat-form-field>
+                                <mat-form-field
+                                    class="fuse-mat-no-subscript w-full mr-4 sm:w-25"
+                                >
+                                    <mat-label>Cidade</mat-label>
+                                    <input
+                                        matInput
+                                        [formControlName]="'cidade'"
+                                        autocomplete="off"
+                                    />
+                                </mat-form-field>
+                                <mat-form-field
+                                    class="fuse-mat-no-subscript w-full sm:w-25"
+                                >
+                                    <mat-label>UF</mat-label>
+                                    <input
+                                        matInput
+                                        [formControlName]="'uf'"
+                                        autocomplete="off"
+                                        maxlength="2"
+                                    />
+                                </mat-form-field>
+                            </div>
+                        </form>
+
+                        <div class="flex justify-end mt-4">
                             <button
                                 class="px-8 mr-2"
                                 mat-flat-button
@@ -194,21 +336,20 @@
                                 type="button"
                                 matStepperPrevious
                             >
-                                Back
+                                Voltar
                             </button>
                             <button
                                 class="px-8"
                                 mat-flat-button
                                 [color]="'primary'"
                                 [disabled]="
-                                    horizontalStepperStep2.stepControl
-                                        .pristine ||
-                                    horizontalStepperStep2.stepControl.invalid
+                                    !this.formSaida.valid ||
+                                    !this.formDestino.valid
                                 "
                                 type="button"
                                 matStepperNext
                             >
-                                Next
+                                Próximo
                             </button>
                         </div>
                     </mat-step>
@@ -216,8 +357,229 @@
                     <mat-step
                         [formGroupName]="'step3'"
                         [stepControl]="this.form.get('step3')"
+                        #horizontalStepperStep3
                     >
-                        <ng-template matStepLabel>Notifications</ng-template>
+                        <ng-template matStepLabel
+                            >Valores/Informações</ng-template
+                        >
+
+                        <div class="flex flex-column">
+                            <mat-form-field
+                                appearance="outline"
+                                class="fuse-mat-no-subscript w-2/3 mr-4 sm:w-35"
+                            >
+                                <mat-label>Valor adulto</mat-label>
+                                <input
+                                    matInput
+                                    formControlName="valorAdulto"
+                                    required
+                                    autocomplete="off"
+                                    type="tel"
+                                    mvndrMatCurrencyFormat
+                                    [allowNegative]="false"
+                                    [currencyCode]="'BRL'"
+                                />
+                            </mat-form-field>
+                            <mat-form-field
+                                appearance="outline"
+                                class="fuse-mat-no-subscript w-2/3 mr-4 sm:w-35"
+                            >
+                                <mat-label>Valor infantil</mat-label>
+                                <input
+                                    matInput
+                                    formControlName="valorInfantil"
+                                    required
+                                    autocomplete="off"
+                                    type="tel"
+                                    mvndrMatCurrencyFormat
+                                    [allowNegative]="false"
+                                    [currencyCode]="'BRL'"
+                                />
+                            </mat-form-field>
+                            <mat-form-field
+                                appearance="outline"
+                                class="fuse-mat-no-subscript w-2/3 mr-4 sm:w-35"
+                            >
+                                <mat-label
+                                    >Considerar criança aparti de quantos
+                                    anos?</mat-label
+                                >
+                                <input
+                                    matInput
+                                    formControlName="considerarCrianca"
+                                    autocomplete="off"
+                                    type="number"
+                                />
+                            </mat-form-field>
+                        </div>
+
+                        <div class="flex flex-column">
+                            <mat-form-field
+                                appearance="outline"
+                                class="fuse-mat-no-subscript w-full"
+                            >
+                                <mat-label>Itinerário</mat-label>
+                                <textarea
+                                    matInput
+                                    formControlName="itinerario"
+                                    autocomplete="off"
+                                ></textarea>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="flex flex-column">
+                            <mat-form-field
+                                appearance="outline"
+                                class="fuse-mat-no-subscript w-full"
+                            >
+                                <mat-label>Observações</mat-label>
+                                <textarea
+                                    matInput
+                                    formControlName="observacoes"
+                                    autocomplete="off"
+                                ></textarea>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="flex justify-end mt-8">
+                            <button
+                                class="px-8 mr-2"
+                                mat-flat-button
+                                [color]="'accent'"
+                                type="button"
+                                matStepperPrevious
+                            >
+                                Voltar
+                            </button>
+                            <button
+                                class="px-8"
+                                mat-flat-button
+                                [color]="'primary'"
+                                type="button"
+                                [disabled]="
+                                    horizontalStepperStep3.stepControl
+                                        .pristine ||
+                                    horizontalStepperStep3.stepControl.invalid
+                                "
+                                matStepperNext
+                            >
+                                Próximo
+                            </button>
+                        </div>
+                    </mat-step>
+
+                    <mat-step
+                        [formGroupName]="'step4'"
+                        [stepControl]="this.form.get('step4')"
+                    >
+                        <ng-template matStepLabel>Carro/Motorista</ng-template>
+
+                        <div class="flex flex-column">
+                            <mat-form-field
+                                appearance="outline"
+                                class="fuse-mat-no-subscript w-2/3 mr-4 sm:w-35"
+                            >
+                                <mat-label>Motorista</mat-label>
+                                <input
+                                    type="text"
+                                    placeholder="Digite o nome"
+                                    [formControl]="myControlMotorista"
+                                    matInput
+                                    [matAutocomplete]="auto"
+                                />
+                                <mat-autocomplete
+                                    autoActiveFirstOption
+                                    #auto="matAutocomplete"
+                                    [displayWith]="this.displayMotorista"
+                                >
+                                    <mat-option
+                                        *ngFor="
+                                            let option of this.filteredMoto
+                                                | async
+                                        "
+                                        [value]="option"
+                                    >
+                                        {{ option.nome }}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                            <mat-form-field
+                                appearance="outline"
+                                class="fuse-mat-no-subscript w-2/3 mr-4 sm:w-35"
+                            >
+                                <mat-label>Ônibus/Carro</mat-label>
+                                <input
+                                    type="text"
+                                    placeholder="Digite o nome"
+                                    [formControl]="myControlOnibus"
+                                    matInput
+                                    [matAutocomplete]="autoO"
+                                />
+                                <mat-autocomplete
+                                    autoActiveFirstOption
+                                    #autoO="matAutocomplete"
+                                    [displayWith]="this.displayOnibus"
+                                >
+                                    <mat-option
+                                        *ngFor="
+                                            let option of this.filteredOni
+                                                | async
+                                        "
+                                        [value]="option"
+                                    >
+                                        {{ option.nome }} - Nº Poltronas
+                                        {{ option.poltronas }}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                            <button
+                                mat-mini-fab
+                                color="primary"
+                                (click)="this.setMotoristaOnibus()"
+                                matTooltip="Adicionar"
+                            >
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </div>
+
+                        <div
+                            class="flex flex-column motoristaOnibus"
+                            *ngIf="this.selecionadoOnibusMotoristas.length > 0"
+                        >
+                            <table>
+                                <tr>
+                                    <th>Motorista</th>
+                                    <th>Ônibus</th>
+                                    <th>N° de poltrona</th>
+                                    <th></th>
+                                </tr>
+                                <tr
+                                    *ngFor="
+                                        let item of this
+                                            .selecionadoOnibusMotoristas
+                                    "
+                                >
+                                    <td>{{ item.motorista.nome }}</td>
+                                    <td>{{ item.onibus.nome }}</td>
+                                    <td>{{ item.onibus.poltronas }}</td>
+                                    <td>
+                                        <button
+                                            mat-mini-fab
+                                            color="accent"
+                                            class="text-center"
+                                            (click)="
+                                                this.removerMotoristaOnibus(
+                                                    item
+                                                )
+                                            "
+                                            matTooltip="Remover"
+                                        >
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
 
                         <div class="flex justify-end mt-8">
                             <button
@@ -234,15 +596,35 @@
                                 mat-flat-button
                                 [color]="'primary'"
                                 type="button"
+                                [disabled]="
+                                    this.selecionadoOnibusMotoristas.length == 0
+                                "
                                 matStepperNext
                             >
-                                Next
+                                Próximo
                             </button>
                         </div>
                     </mat-step>
 
-                    <mat-step>
-                        <ng-template matStepLabel>Done</ng-template>
+                    <mat-step
+                        [formGroupName]="'step5'"
+                        [stepControl]="this.form.get('step5')"
+                    >
+                        <ng-template matStepLabel>Contrato</ng-template>
+
+                        <div class="flex flex-column">
+                            <mat-form-field
+                                appearance="outline"
+                                class="fuse-mat-no-subscript w-full"
+                            >
+                                <mat-label>Contrato</mat-label>
+                                <textarea
+                                    matInput
+                                    formControlName="contrato"
+                                    autocomplete="off"
+                                ></textarea>
+                            </mat-form-field>
+                        </div>
 
                         <div class="flex justify-end mt-8">
                             <button
@@ -259,9 +641,9 @@
                                 mat-flat-button
                                 [color]="'primary'"
                                 type="reset"
-                                (click)="horizontalStepper.reset()"
+                                (click)="this.salvar()"
                             >
-                                Reset
+                                Salvar
                             </button>
                         </div>
                     </mat-step>

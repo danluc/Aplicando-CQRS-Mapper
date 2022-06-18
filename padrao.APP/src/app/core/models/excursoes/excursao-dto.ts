@@ -17,7 +17,6 @@ export class ExcursaoDTO {
     observacoes?: string;
     contrato?: string;
     situacao?: boolean;
-    orcamento: boolean;
     enderecoDestinoId?: number;
     enderecoSaidaId?: number;
     empresaId?: number;
@@ -25,5 +24,5 @@ export class ExcursaoDTO {
     empresa?: Empresas;
     enderecoDestino?: Enderecos;
     enderecoSaida?: Enderecos;
-    onibusMotoristas?: OnibusMotoristaExcursao;
+    onibusMotoristas?: Array<OnibusMotoristaExcursao>;
 }
