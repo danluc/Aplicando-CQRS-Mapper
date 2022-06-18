@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using padrao.API.Models;
 using padrao.API.Models.DTOs.Clientes;
+using padrao.API.Models.DTOs.Contrato;
 using padrao.API.Models.DTOs.Excursoes;
 using padrao.API.Models.DTOs.Hotel;
 using padrao.API.Models.DTOs.Motoristas;
@@ -41,6 +42,10 @@ namespace padrao.API.Config
             CreateMap<Excursoes, ExcursaoDTO>()
                .ReverseMap();
             CreateMap<ExcursaoDTO, Excursoes>()
+                .ReverseMap();
+            CreateMap<ContratoViagem, ContratoDTO>()
+              .ReverseMap();
+            CreateMap<ContratoDTO, ContratoViagem>()
                 .ReverseMap();
         }
     }
