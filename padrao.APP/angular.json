@@ -38,7 +38,8 @@
                                 "glob": "_redirects",
                                 "input": "src",
                                 "output": "/"
-                            }
+                            },
+                            { "glob": "**/*", "input": "node_modules/tinymce", "output": "/tinymce/" }
                         ],
                         "stylePreprocessorOptions": {
                             "includePaths": [
@@ -53,7 +54,12 @@
                             "src/styles/styles.scss",
                             "src/styles/tailwind.scss"
                         ],
-                        "scripts": []
+                        "scripts": [
+                            "node_modules/tinymce/tinymce.min.js",
+                            "node_modules/tinymce/themes/silver/theme.min.js",
+                            "node_modules/tinymce/plugins/link/plugin.min.js",
+                            "node_modules/tinymce/icons/default/icons.min.js"
+                        ]
                     },
                     "configurations": {
                         "production": {

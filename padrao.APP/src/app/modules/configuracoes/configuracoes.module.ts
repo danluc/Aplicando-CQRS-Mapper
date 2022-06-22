@@ -30,6 +30,7 @@ import { ComponentesModule } from '../components/componentes.module';
 import { InserirImagemComponent } from './empresa/inserir-imagem/inserir-imagem.component';
 import { CadastrarUsuarioComponent } from './usuarios/cadastrar-usuario/cadastrar-usuario.component';
 import { ContratoViagemComponent } from './contrato-viagem/contrato-viagem.component';
+import { EditorModule } from "@tinymce/tinymce-angular";
 
 const exampleRoutes: Route[] = [
     {
@@ -63,6 +64,7 @@ const exampleRoutes: Route[] = [
         MatSlideToggleModule,
         MatCheckboxModule,
         ComponentesModule,
+        EditorModule,
     ],
     declarations: [
         ConfiguracoesComponent,

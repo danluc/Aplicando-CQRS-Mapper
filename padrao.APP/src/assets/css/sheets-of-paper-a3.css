@@ -1,0 +1,26 @@
+/*!
+ * HTML-Sheets-of-Paper (https://github.com/delight-im/HTML-Sheets-of-Paper)
+ * Copyright (c) delight.im (https://www.delight.im/)
+ * Licensed under the MIT License (https://opensource.org/licenses/MIT)
+ */
+
+@import 'sheets-of-paper.css';
+
+.page {
+    width: 29.7cm;
+    min-height: 42cm;
+
+    padding-left: 1cm;
+    padding-top: 1cm;
+    padding-right: 1cm;
+    padding-bottom: 1cm;
+}
+
+@page {
+    size: A3 portrait;
+
+    margin-left: 1cm;
+    margin-top: 1cm;
+    margin-right: 1cm;
+    margin-bottom: 1cm;
+}

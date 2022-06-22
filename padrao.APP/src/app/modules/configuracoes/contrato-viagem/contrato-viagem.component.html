@@ -1,3 +1,15 @@
-<p>
-  contrato-viagem works!
-</p>
+<form
+    name="formEditor"
+    [formGroup]="this.formEditor"
+    class="w-full"
+    id="form-editor"
+>
+    <editor
+        formControlName="template"
+        class="w-full"
+        required
+        [init]="this.configuracoesEditor"
+        id="template-editor"
+    >
+    </editor>
+</form>
