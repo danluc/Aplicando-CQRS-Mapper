@@ -1,3 +1,4 @@
+
 .column {
     float: left;
     width: 50%;
@@ -164,32 +165,34 @@ span.fs-tooltip {
 }
 
 
-span.fs-tooltip:hover:after{
-    background: #444;
-    border-radius: 8px;
-    color: #fff;
-    content: attr(data-title);
-    margin: -2px auto 0;
-    font-size: 16px;
-    padding: 13px;
-    width: 220px;
-    position: absolute;
-  }
-
-  span.fs-tooltip.tooltip:hover:before{
-    border: solid;
-    border-color: #444 transparent;
-    border-width: 12px 6px 0 6px;
-    content: "";
-    left: 45%;
-    bottom: 30px;
-    position: absolute;
-  }
-
 #assinatura {
     display: none;
 }
 .assinatura {
     margin-top: 50px;
     text-align: center;
+}
+
+.div-total-center {
+	display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+}
+
+.h-100-x {
+	height: 100px;
+}
+
+.h-100-p {
+	width: 100%;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.prestacao {
+	font-weight: 600;
 }

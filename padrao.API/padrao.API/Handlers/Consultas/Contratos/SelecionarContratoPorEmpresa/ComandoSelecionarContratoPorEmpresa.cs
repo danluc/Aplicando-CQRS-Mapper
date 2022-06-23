@@ -27,8 +27,7 @@ namespace padrao.API.Handlers.Consultas.Contratos.SelecionarContratoPorEmpresa
         {
             try
             {
-                var dados = await _bancoDBContext.ContratoViagem.AsNoTracking().Include(e => e.Empresa)
-                                                                        .FirstOrDefaultAsync(e => e.EmpresaId == request.EmpresaId && e.Codigo == request.Codigo);
+                var dados = await _bancoDBContext.ContratoViagem.AsNoTracking().Include(e => e.Empresa).FirstOrDefaultAsync(e => e.EmpresaId == request.EmpresaId);
 
                 return new ResultadoCadastrarContrato
                 {

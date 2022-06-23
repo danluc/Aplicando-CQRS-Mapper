@@ -9,7 +9,6 @@ namespace padrao.API.Models.DTOs.Contrato
     {
         public int Id { get; set; }
         public int EmpresaId { get; set; }
-        public bool Situacao { get; set; }
         public string Contrato { get; set; }
         public string Codigo { get; set; }
         public Empresas Empresa { get; set; }

@@ -31,9 +31,8 @@ namespace padrao.API.Handlers.Comandos.Contratos.CadastrarContrato
                     Codigo = GerarCodigoHelper.GerarCodigo(),
                     EmpresaId = request.EmpresaId,
                     Contrato = request.Contrato,
-                    Situacao = true
                 };
-                var contrato = _mapper.Map<Models.ContratoViagem>(request.Contrato);
+                var contrato = _mapper.Map<Models.ContratoViagem>(contratoDTO);
                 await _bancoDBContext.AddAsync(contrato);
                 await _bancoDBContext.SaveChangesAsync(cancellationToken);
 

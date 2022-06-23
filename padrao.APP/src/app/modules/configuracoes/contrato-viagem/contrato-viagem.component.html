@@ -5,11 +5,32 @@
     id="form-editor"
 >
     <editor
-        formControlName="template"
+        formControlName="contrato"
         class="w-full"
         required
         [init]="this.configuracoesEditor"
         id="template-editor"
     >
     </editor>
+    <!-- Divider -->
+    <div class="mt-3 mb-3 border-t"></div>
+
+    <!-- Actions -->
+    <div class="flex items-center justify-end">
+        <!-- Send -->
+        <button
+            class="order-first sm:order-last w-full"
+            mat-flat-button
+            [color]="'primary'"
+            (click)="this.salvar()"
+            [disabled]="this.salvando"
+        >
+            <span *ngIf="!this.salvando">Salvar</span>
+            <mat-progress-spinner
+                *ngIf="this.salvando"
+                [diameter]="24"
+                [mode]="'indeterminate'"
+            ></mat-progress-spinner>
+        </button>
+    </div>
 </form>

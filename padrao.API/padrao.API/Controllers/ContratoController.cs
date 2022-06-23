@@ -25,10 +25,10 @@ namespace padrao.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("{codigo}")]
-        public async Task<ActionResult> Get(string codigo)
+        [HttpGet("")]
+        public async Task<ActionResult> Get()
         {
-            var dados = await _mediator.Send(new ParametroSelecionarContratoPorEmpresa(this.RetornarIdEmpresaDoToken(), codigo));
+            var dados = await _mediator.Send(new ParametroSelecionarContratoPorEmpresa(this.RetornarIdEmpresaDoToken()));
             if (!dados.Sucesso)
                 return BadRequest($"{dados.Mensagem}");
 
@@ -36,9 +36,9 @@ namespace padrao.API.Controllers
         }
 
         [HttpPost("")]
-        public async Task<ActionResult> Post(ContratoDTO dados)
+        public async Task<ActionResult> Post(CadastrarContratoDTO dados)
         {
-            var result = await _mediator.Send(new ParametroCadastrarContrato(this.RetornarIdEmpresaDoToken(), dados.Contrato));
+            var result = await _mediator.Send(new ParametroCadastrarContrato(this.RetornarIdEmpresaDoToken(), dados.Dados));
             if (!result.Sucesso)
                 return BadRequest($"{result.Mensagem}");
 
