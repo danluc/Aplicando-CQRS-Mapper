@@ -38,6 +38,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { CadastrarExcursaoComponent } from './cadastrar-excursao/cadastrar-excursao.component';
 import { ListaExcursoesComponent } from './lista-excursoes/lista-excursoes.component';
 import { MatCurrencyFormatModule } from 'mat-currency-format';
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 const exampleRoutes: Route[] = [
     {
@@ -84,6 +85,7 @@ const exampleRoutes: Route[] = [
         MatRippleModule,
         MatStepperModule,
         MatCurrencyFormatModule,
+        EditorModule
     ],
     declarations: [
         ExcursoesComponent,

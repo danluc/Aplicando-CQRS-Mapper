@@ -17,12 +17,16 @@ import {
 import { Router } from '@angular/router';
 import { FuseLoadingBarService } from '@fuse/components/loading-bar';
 import { MY_FORMATS } from 'app/core/functions/date-format';
+import { dataExtenso } from 'app/core/functions/idade';
 import { scrollFactory } from 'app/core/functions/scroll-factory';
+import { ContratoDTO } from 'app/core/models/contrato/contrato-dto';
 import { Enderecos } from 'app/core/models/endereco';
 import { ExcursaoDTO } from 'app/core/models/excursoes/excursao-dto';
 import { OnibusMotoristaExcursao } from 'app/core/models/excursoes/onibus-motorista-excursao';
 import { MotoristaDTO } from 'app/core/models/motoristas/motorista-dto';
 import { OnibusDTO } from 'app/core/models/onibus/onibus-dto';
+import { ConfigEditorTextoContratoService } from 'app/core/services/config-editor-contrato.service';
+import { ContratoControllerService } from 'app/core/services/controllers/contrato-controller.service';
 import { ExcursoesControllerService } from 'app/core/services/controllers/excursoes-controller.service';
 import { MotoristasControllerService } from 'app/core/services/controllers/motoristas-controller.service';
 import { OnibusControllerService } from 'app/core/services/controllers/onibus-controller.service';
@@ -56,9 +60,12 @@ export class CadastrarExcursaoComponent implements OnInit {
     public form: FormGroup;
     public formDestino: FormGroup;
     public formSaida: FormGroup;
-
+    public contrato: ContratoDTO = new ContratoDTO();
     public motoristas: Array<MotoristaDTO> = new Array<MotoristaDTO>();
     public onibus: Array<OnibusDTO> = new Array<OnibusDTO>();
+    public formEditor: FormGroup;
+    public configuracoesEditor: object;
+
     myControlOnibus = new FormControl();
     myControlMotorista = new FormControl();
     filteredMoto: Observable<MotoristaDTO[]>;
@@ -79,12 +86,15 @@ export class CadastrarExcursaoComponent implements OnInit {
         private _motoristasControllerService: MotoristasControllerService,
         private _onibusControllerService: OnibusControllerService,
         private _excursoesControllerService: ExcursoesControllerService,
-        private _router: Router
+        private _router: Router,
+        private _contratoControllerService: ContratoControllerService,
+        private _configContratoService: ConfigEditorTextoContratoService
     ) {}
 
     ngOnInit() {
         this._buscarMotoristas();
         this._buscarOnibus();
+        this._selecionarContrato();
         this.filteredMoto = this.myControlMotorista.valueChanges.pipe(
             startWith(''),
             map((value) => this._filterMoto(value.nome || ''))
@@ -93,6 +103,8 @@ export class CadastrarExcursaoComponent implements OnInit {
             startWith(''),
             map((value) => this._filterOnibus(value.nome || ''))
         );
+        this.configuracoesEditor =
+            this._configContratoService.configuracaoPadraoEditor();
 
         this.form = this._formBuilder.group({
             step1: this._formBuilder.group({
@@ -425,26 +437,8 @@ export class CadastrarExcursaoComponent implements OnInit {
                 motoristasId: e.motorista.id,
             });
         });
-        let dados: ExcursaoDTO = {
-            considerarCrianca: this.form.get('step3').get('considerarCrianca')
-                .value,
-            valorAdulto: this.form.get('step3').get('valorAdulto').value,
-            valorInfantil: this.form.get('step3').get('valorInfantil').value,
-            itinerario: this.form.get('step3').get('itinerario').value,
-            observacoes: this.form.get('step3').get('observacoes').value,
-            enderecoDestino: this.form.get('step2').get('enderecoDestino')
-                .value,
-            enderecoSaida: this.form.get('step2').get('enderecoSaida').value,
-            nome: this.form.get('step1').get('nome').value,
-            dataFim: this.form.get('step1').get('dataFim').value,
-            dataIncio: this.form.get('step1').get('dataIncio').value,
-            dataRetorno: this.form.get('step1').get('dataRetorno').value,
-            dataSaida: this.form.get('step1').get('dataSaida').value,
-            codigo: null,
-            onibusMotoristas: motoristasOnibus,
-            contrato: this.form.get('step5').get('contrato').value,
-        };
-
+        let dados = this.montarDTOExcursao;
+        dados.onibusMotoristas = motoristasOnibus;
         return dados;
     }
 
@@ -465,5 +459,106 @@ export class CadastrarExcursaoComponent implements OnInit {
             .value.split(':');
         dSaida.setHours(horaSaida[0], horaSaida[1]);
         this.form.get('step1').get('dataSaida').setValue(dSaida);
+    }
+
+    private _selecionarContrato(): void {
+        this._fuseLoadingService.show();
+        this._contratoControllerService.selecionar().subscribe(
+            (res) => {
+                if (!res.sucesso) {
+                    this._toastService.mensagemError(
+                        'Erro ao buscar dados: ' + res.mensagem
+                    );
+                    return;
+                }
+                this.contrato = res.contrato;
+                if (
+                    this.contrato != null &&
+                    this.contrato.contrato.length > 0
+                ) {
+                    this.form
+                        .get('step5')
+                        .get('contrato')
+                        .setValue(this.contrato.contrato);
+                }
+                this._fuseLoadingService.hide();
+            },
+            (erro) => {
+                this._toastService.mensagemError(
+                    'Erro ao buscar dados: ' + erro.error
+                );
+                console.log(erro);
+                this._fuseLoadingService.hide();
+            }
+        );
+    }
+
+    private get montarDTOExcursao(): ExcursaoDTO {
+        let dados: ExcursaoDTO = {
+            considerarCrianca: this.form.get('step3').get('considerarCrianca')
+                .value,
+            valorAdulto: this.form.get('step3').get('valorAdulto').value,
+            valorInfantil: this.form.get('step3').get('valorInfantil').value,
+            itinerario: this.form.get('step3').get('itinerario').value,
+            observacoes: this.form.get('step3').get('observacoes').value,
+            enderecoDestino: this.form.get('step2').get('enderecoDestino')
+                .value,
+            enderecoSaida: this.form.get('step2').get('enderecoSaida').value,
+            nome: this.form.get('step1').get('nome').value,
+            dataFim: this.form.get('step1').get('dataFim').value,
+            dataIncio: this.form.get('step1').get('dataIncio').value,
+            dataRetorno: this.form.get('step1').get('dataRetorno').value,
+            dataSaida: this.form.get('step1').get('dataSaida').value,
+            codigo: null,
+            onibusMotoristas: null,
+            contrato: this.form.get('step5').get('contrato').value,
+        };
+        return dados;
+    }
+
+    public atualizarTextoContrato(): void {
+        let textoContrato = this.form.get('step5').get('contrato').value;
+        let dadosEx = this.montarDTOExcursao;
+        textoContrato = textoContrato.replace(
+            new RegExp(this._configContratoService.NOMEEXCURSAO, 'g'),
+            dadosEx.nome
+        );
+        textoContrato = textoContrato.replace(
+            new RegExp(this._configContratoService.LOCALEXCURSAO, 'g'),
+            `${dadosEx.enderecoDestino.logradouro}, ${dadosEx.enderecoDestino.bairro}, ${dadosEx.enderecoDestino.cidade}-${dadosEx.enderecoDestino.uf}`
+        );
+        textoContrato = textoContrato.replace(
+            new RegExp(this._configContratoService.LOCALSAIDAEXCURSAO, 'g'),
+            `${dadosEx.enderecoSaida.logradouro}, n° ${dadosEx.enderecoSaida.numero}, ${dadosEx.enderecoSaida.bairro}, ${dadosEx.enderecoSaida.cidade}-${dadosEx.enderecoSaida.uf}`
+        );
+        textoContrato = textoContrato.replace(
+            new RegExp(this._configContratoService.DATASAIDAEXCURSAO, 'g'),
+            dataExtenso(dadosEx.dataSaida)
+        );
+        textoContrato = textoContrato.replace(
+            new RegExp(this._configContratoService.CIDADEEXCURSAO, 'g'),
+            dadosEx.enderecoDestino.cidade
+        );
+        textoContrato = textoContrato.replace(
+            new RegExp(this._configContratoService.UFEXCURSAO, 'g'),
+            dadosEx.enderecoDestino.uf
+        );
+        textoContrato = textoContrato.replace(
+            new RegExp(this._configContratoService.UFSAIDAEXCURSAO, 'g'),
+            dadosEx.enderecoSaida.uf
+        );
+        textoContrato = textoContrato.replace(
+            new RegExp(this._configContratoService.CIDADESAIDAEXCURSAO, 'g'),
+            dadosEx.enderecoSaida.cidade
+        );
+        textoContrato = textoContrato.replace(
+            new RegExp(this._configContratoService.DATAVIAGEM, 'g'),
+            dataExtenso(dadosEx.dataSaida)
+        );
+        textoContrato = textoContrato.replace(
+            new RegExp(this._configContratoService.CIDADEUFEMPRESA, 'g'),
+            'Montes Claros / MG'
+        );
+        this.form.get('step5').get('contrato').setValue(textoContrato);
     }
 }

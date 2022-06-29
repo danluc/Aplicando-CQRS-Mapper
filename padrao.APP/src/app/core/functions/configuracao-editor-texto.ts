@@ -35,7 +35,7 @@ export function textoContratoPadraoSistema(): string {
         <b>1.2- BAGAGEM:</b> Será permitido o transporte de duas malas por passageiro, cujas medidas não excedem 70 x 550 x 20 cm, e um volume de mão tipo bolsa, a qual deverá permanecer sempre em poder do <b>CONTRATANTE</b>
 	</div>
     <div class="h-100-p" style="margin-top: 10px;">
-        <b>1.3- HOSPEDAGEM:</b> Os hotel [NOMEHOTEL] utilizados em nossos roteiros são de categoria turistica.
+        <b>1.3- HOSPEDAGEM:</b> Os hoteis utilizados em nossos roteiros são de categoria turistica.
 	</div>
     <div class="h-100-p" style="margin-top: 10px;">
         <b>1.4- SEGURO:</b> A <b>CONTRATADA</b> operará com ônibus devidamente acobertado por seguro qye cobre acidentes pessoais ocorridos durante a viagem rodoviária, dentro do veiculo operado por ela.

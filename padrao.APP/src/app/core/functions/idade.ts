@@ -26,3 +26,8 @@ export function obterIdadeEmAnosMesesDias(data: Date): string {
     const dia = dias > 1 ? 'dias' : 'dia';
     return `${anos} ${ano}, ${meses} ${mes}, ${dias} ${dia}`;
 }
+
+export function dataExtenso(data: Date): string {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(data).toLocaleDateString('pt-BR');
+}

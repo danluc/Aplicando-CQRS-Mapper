@@ -589,7 +589,7 @@
                                 type="button"
                                 matStepperPrevious
                             >
-                                Back
+                                Voltar
                             </button>
                             <button
                                 class="px-8"
@@ -600,6 +600,7 @@
                                     this.selecionadoOnibusMotoristas.length == 0
                                 "
                                 matStepperNext
+                                (click)="this.atualizarTextoContrato()"
                             >
                                 Próximo
                             </button>
@@ -613,17 +614,14 @@
                         <ng-template matStepLabel>Contrato</ng-template>
 
                         <div class="flex flex-column">
-                            <mat-form-field
-                                appearance="outline"
-                                class="fuse-mat-no-subscript w-full"
+                            <editor
+                                formControlName="contrato"
+                                class="w-full"
+                                required
+                                [init]="this.configuracoesEditor"
+                                id="template-editor"
                             >
-                                <mat-label>Contrato</mat-label>
-                                <textarea
-                                    matInput
-                                    formControlName="contrato"
-                                    autocomplete="off"
-                                ></textarea>
-                            </mat-form-field>
+                            </editor>
                         </div>
 
                         <div class="flex justify-end mt-8">
@@ -634,7 +632,7 @@
                                 type="button"
                                 matStepperPrevious
                             >
-                                Back
+                                Voltar
                             </button>
                             <button
                                 class="px-8"

@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { textoContratoPadraoSistema } from '../functions/configuracao-editor-texto';
-import { EnderecoCidadeUF, EnderecoContratoPadra } from '../functions/endereco-extenso';
+import {
+    EnderecoCidadeUF,
+    EnderecoContratoPadra,
+} from '../functions/endereco-extenso';
 import { Empresas } from '../models/empresas/empresa';
 import { TamanhoPapel } from '../models/enums/tamanho-papel';
 
@@ -15,8 +18,23 @@ export class ConfigEditorTextoContratoService {
     public ENDERECOEMPRESA: string = '{ENDERECOEMPRESA}';
     public CADASTUR: string = '{CADASTUR}';
     public CIDADEUFEMPRESA: string = '{CIDADEUFEMPRESA}';
-    public DATAVIAGEM: string = '{DATAVIAGEM}';
+    public TELEFONEEMPRESA: string = '{TELEFONEEMPRESA}';
     public CNPJ: string = '{CNPJ}';
+
+    public NOMECLIENTE: string = '{NOMECLIENTE}';
+    public CPFCLIENTE: string = '{CPFCLIENTE}';
+    public RGCLIENTE: string = '{RGCLIENTE}';
+
+    public NOMEEXCURSAO: string = '{NOMEEXCURSAO}';
+    public LOCALEXCURSAO: string = '{LOCALEXCURSAO}';
+    public LOCALSAIDAEXCURSAO: string = '{LOCALSAIDAEXCURSAO}';
+    public DATASAIDAEXCURSAO: string = '{DATASAIDAEXCURSAO}';
+    public CIDADEEXCURSAO: string = '{CIDADEEXCURSAO}';
+    public UFEXCURSAO: string = '{UFEXCURSAO}';
+    public CIDADESAIDAEXCURSAO: string = '{CIDADESAIDAEXCURSAO}';
+    public UFSAIDAEXCURSAO: string = '{UFSAIDAEXCURSAO}';
+
+    public DATAVIAGEM: string = '{DATAVIAGEM}';
 
     constructor() {}
 
@@ -109,14 +127,105 @@ export class ConfigEditorTextoContratoService {
                     },
                     {
                         type: 'nestedmenuitem',
-                        text: 'Espaços Superior',
+                        text: 'Dados cliente',
                         getSubmenuItems: () => {
                             return [
-                                this.espacoSuperior(editor, 3, '3'),
-                                this.espacoSuperior(editor, 6, '6'),
-                                this.espacoSuperior(editor, 12, '12'),
-                                this.espacoSuperior(editor, 18, '18'),
-                                this.espacoSuperior(editor, 24, '24'),
+                                this.inserirVariavel(
+                                    editor,
+                                    'Nome',
+                                    this.NOMECLIENTE
+                                ),
+                                this.inserirVariavel(
+                                    editor,
+                                    'CPF',
+                                    this.CPFCLIENTE
+                                ),
+                                this.inserirVariavel(
+                                    editor,
+                                    'Rg',
+                                    this.RGCLIENTE
+                                ),
+                            ];
+                        },
+                    },
+                    {
+                        type: 'nestedmenuitem',
+                        text: 'Dados excursão',
+                        getSubmenuItems: () => {
+                            return [
+                                this.inserirVariavel(
+                                    editor,
+                                    'Nome',
+                                    this.NOMEEXCURSAO
+                                ),
+                                this.inserirVariavel(
+                                    editor,
+                                    'Local',
+                                    this.LOCALEXCURSAO
+                                ),
+                                this.inserirVariavel(
+                                    editor,
+                                    'Local saída',
+                                    this.LOCALSAIDAEXCURSAO
+                                ),
+                                this.inserirVariavel(
+                                    editor,
+                                    'Data saída',
+                                    this.DATASAIDAEXCURSAO
+                                ),
+                                this.inserirVariavel(
+                                    editor,
+                                    'Cidade excursão',
+                                    this.CIDADEEXCURSAO
+                                ),
+                                this.inserirVariavel(
+                                    editor,
+                                    'UF excursão',
+                                    this.UFEXCURSAO
+                                ),
+                                this.inserirVariavel(
+                                    editor,
+                                    'Cidade saída',
+                                    this.CIDADESAIDAEXCURSAO
+                                ),
+                                this.inserirVariavel(
+                                    editor,
+                                    'UF saída',
+                                    this.UFSAIDAEXCURSAO
+                                ),
+                            ];
+                        },
+                    },
+                    {
+                        type: 'nestedmenuitem',
+                        text: 'Dados empresa',
+                        getSubmenuItems: () => {
+                            return [
+                                this.inserirVariavel(
+                                    editor,
+                                    'Nome',
+                                    this.NOMEEMPRESA
+                                ),
+                                this.inserirVariavel(
+                                    editor,
+                                    'CPF/CPNJ',
+                                    this.CNPJ
+                                ),
+                                this.inserirVariavel(
+                                    editor,
+                                    'Telefone',
+                                    this.TELEFONEEMPRESA
+                                ),
+                                this.inserirVariavel(
+                                    editor,
+                                    'Endereco',
+                                    this.ENDERECOEMPRESA
+                                ),
+                                this.inserirVariavel(
+                                    editor,
+                                    'Cidade/UF',
+                                    this.CIDADEUFEMPRESA
+                                ),
                             ];
                         },
                     },
@@ -164,14 +273,31 @@ export class ConfigEditorTextoContratoService {
         };
     }
 
+    private inserirVariavel(
+        editor: any,
+        titulo: string,
+        variavel: string
+    ): object {
+        return {
+            type: 'menuitem',
+            text: titulo,
+            onAction: () => {
+                editor.insertContent(`${variavel}`);
+            },
+        };
+    }
+
     private setTextoPadrao(editor: any): string {
-        const iframe: HTMLIFrameElement = document.querySelector('editor iframe');
+        const iframe: HTMLIFrameElement =
+            document.querySelector('editor iframe');
 
         if (iframe.contentDocument.getElementById('container-cabecalho')) {
             return;
         }
-        
-        const body = iframe.contentDocument.getElementsByTagName('body').item(0);
+
+        const body = iframe.contentDocument
+            .getElementsByTagName('body')
+            .item(0);
         let txt = this.tratarParametrosEditor();
         editor.setContent(txt);
     }
@@ -191,8 +317,14 @@ export class ConfigEditorTextoContratoService {
             EnderecoContratoPadra(this._empresa.endereco)
         );
         textoPadrao = textoPadrao.replace(new RegExp(this.CADASTUR, 'g'), '');
-        textoPadrao = textoPadrao.replace(new RegExp(this.CNPJ, 'g'), this._empresa.cpfcnpj);
-        textoPadrao = textoPadrao.replace(new RegExp(this.CIDADEUFEMPRESA, 'g'), EnderecoCidadeUF(this._empresa.endereco));
+        textoPadrao = textoPadrao.replace(
+            new RegExp(this.CNPJ, 'g'),
+            this._empresa.cpfcnpj
+        );
+        textoPadrao = textoPadrao.replace(
+            new RegExp(this.CIDADEUFEMPRESA, 'g'),
+            EnderecoCidadeUF(this._empresa.endereco)
+        );
         return textoPadrao;
     }
 }
