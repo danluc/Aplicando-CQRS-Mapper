@@ -1,19 +1,19 @@
 <div class="flex flex-col flex-auto min-w-0">
     <!-- Header --
-    <div
-        class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent"
-    >
-        <div class="flex-1 min-w-0">
-            <!-- Title 
-            <div class="mt-2">
-                <h2
-                    class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate"
-                >
-                    Excursão
-                </h2>
-            </div>
-        </div>
-    </div>-->
+  <div
+      class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent"
+  >
+      <div class="flex-1 min-w-0">
+          <!-- Title 
+          <div class="mt-2">
+              <h2
+                  class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate"
+              >
+                  Excursão
+              </h2>
+          </div>
+      </div>
+  </div>-->
 
     <!-- Main -->
     <div class="flex-auto p-6 sm:p-10">
@@ -21,6 +21,7 @@
             <form
                 class="p-4 bg-card shadow rounded overflow-hidden"
                 [formGroup]="this.form"
+                *ngIf="this.mostrarFormulario"
             >
                 <mat-horizontal-stepper [linear]="true" #horizontalStepper>
                     <mat-step
@@ -157,8 +158,6 @@
                                 mat-flat-button
                                 [color]="'primary'"
                                 [disabled]="
-                                    horizontalStepperStep1.stepControl
-                                        .pristine ||
                                     horizontalStepperStep1.stepControl.invalid
                                 "
                                 type="button"
@@ -439,191 +438,6 @@
                                     autocomplete="off"
                                 ></textarea>
                             </mat-form-field>
-                        </div>
-
-                        <div class="flex justify-end mt-8">
-                            <button
-                                class="px-8 mr-2"
-                                mat-flat-button
-                                [color]="'accent'"
-                                type="button"
-                                matStepperPrevious
-                            >
-                                Voltar
-                            </button>
-                            <button
-                                class="px-8"
-                                mat-flat-button
-                                [color]="'primary'"
-                                type="button"
-                                [disabled]="
-                                    horizontalStepperStep3.stepControl
-                                        .pristine ||
-                                    horizontalStepperStep3.stepControl.invalid
-                                "
-                                matStepperNext
-                            >
-                                Próximo
-                            </button>
-                        </div>
-                    </mat-step>
-
-                    <mat-step
-                        [formGroupName]="'step4'"
-                        [stepControl]="this.form.get('step4')"
-                    >
-                        <ng-template matStepLabel>Carro/Motorista</ng-template>
-
-                        <div class="flex flex-column">
-                            <mat-form-field
-                                appearance="outline"
-                                class="fuse-mat-no-subscript w-2/3 mr-4 sm:w-35"
-                                (click)="this.abrirOptionsMotorista()"
-                            >
-                                <mat-label>Motorista</mat-label>
-                                <input
-                                    type="text"
-                                    placeholder="Digite o nome"
-                                    [formControl]="myControlMotorista"
-                                    matInput
-                                    [matAutocomplete]="auto"
-                                />
-                                <mat-autocomplete
-                                    autoActiveFirstOption
-                                    #auto="matAutocomplete"
-                                    [displayWith]="this.displayMotorista"
-                                >
-                                    <mat-option
-                                        *ngFor="
-                                            let option of this.filteredMoto
-                                                | async
-                                        "
-                                        [value]="option"
-                                    >
-                                        {{ option.nome }}
-                                    </mat-option>
-                                </mat-autocomplete>
-                            </mat-form-field>
-                            <mat-form-field
-                                appearance="outline"
-                                class="fuse-mat-no-subscript w-2/3 mr-4 sm:w-35"
-                                (click)="this.abrirOptionsOnibus()"
-                            >
-                                <mat-label>Ônibus/Carro</mat-label>
-                                <input
-                                    type="text"
-                                    placeholder="Digite o nome"
-                                    [formControl]="myControlOnibus"
-                                    matInput
-                                    [matAutocomplete]="autoO"
-                                />
-                                <mat-autocomplete
-                                    autoActiveFirstOption
-                                    #autoO="matAutocomplete"
-                                    [displayWith]="this.displayOnibus"
-                                >
-                                    <mat-option
-                                        *ngFor="
-                                            let option of this.filteredOni
-                                                | async
-                                        "
-                                        [value]="option"
-                                    >
-                                        {{ option.nome }} - Nº Poltronas
-                                        {{ option.poltronas }}
-                                    </mat-option>
-                                </mat-autocomplete>
-                            </mat-form-field>
-                            <button
-                                mat-mini-fab
-                                color="primary"
-                                (click)="this.setMotoristaOnibus()"
-                                matTooltip="Adicionar"
-                            >
-                                <mat-icon>add</mat-icon>
-                            </button>
-                        </div>
-
-                        <div
-                            class="flex flex-column motoristaOnibus"
-                            *ngIf="this.selecionadoOnibusMotoristas.length > 0"
-                        >
-                            <table>
-                                <tr>
-                                    <th>Motorista</th>
-                                    <th>Ônibus</th>
-                                    <th>N° de poltrona</th>
-                                    <th></th>
-                                </tr>
-                                <tr
-                                    *ngFor="
-                                        let item of this
-                                            .selecionadoOnibusMotoristas
-                                    "
-                                >
-                                    <td>{{ item.motorista.nome }}</td>
-                                    <td>{{ item.onibus.nome }}</td>
-                                    <td>{{ item.onibus.poltronas }}</td>
-                                    <td>
-                                        <button
-                                            mat-mini-fab
-                                            color="accent"
-                                            class="text-center"
-                                            (click)="
-                                                this.removerMotoristaOnibus(
-                                                    item
-                                                )
-                                            "
-                                            matTooltip="Remover"
-                                        >
-                                            <mat-icon>delete</mat-icon>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-
-                        <div class="flex justify-end mt-8">
-                            <button
-                                class="px-8 mr-2"
-                                mat-flat-button
-                                [color]="'accent'"
-                                type="button"
-                                matStepperPrevious
-                            >
-                                Voltar
-                            </button>
-                            <button
-                                class="px-8"
-                                mat-flat-button
-                                [color]="'primary'"
-                                type="button"
-                                [disabled]="
-                                    this.selecionadoOnibusMotoristas.length == 0
-                                "
-                                matStepperNext
-                                (click)="this.atualizarTextoContrato()"
-                            >
-                                Próximo
-                            </button>
-                        </div>
-                    </mat-step>
-
-                    <mat-step
-                        [formGroupName]="'step5'"
-                        [stepControl]="this.form.get('step5')"
-                    >
-                        <ng-template matStepLabel>Contrato</ng-template>
-
-                        <div class="flex flex-column">
-                            <editor
-                                formControlName="contrato"
-                                class="w-full"
-                                required
-                                [init]="this.configuracoesEditor"
-                                id="template-editor"
-                            >
-                            </editor>
                         </div>
 
                         <div class="flex justify-end mt-8">

@@ -1,0 +1,9 @@
+.w-15-p {
+    width: 15%;
+}
+
+@media only screen and (max-width: 600px) {
+    .w-15-p {
+        width: 100%;
+    }
+  }

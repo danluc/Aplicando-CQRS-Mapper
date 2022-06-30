@@ -39,6 +39,7 @@ import { CadastrarExcursaoComponent } from './cadastrar-excursao/cadastrar-excur
 import { ListaExcursoesComponent } from './lista-excursoes/lista-excursoes.component';
 import { MatCurrencyFormatModule } from 'mat-currency-format';
 import { EditorModule } from '@tinymce/tinymce-angular';
+import { EditarExcursaoComponent } from './editar-excursao/editar-excursao.component';
 
 const exampleRoutes: Route[] = [
     {
@@ -47,6 +48,7 @@ const exampleRoutes: Route[] = [
         children: [
             { path: '', component: ListaExcursoesComponent },
             { path: 'adicionar', component: CadastrarExcursaoComponent },
+            { path: 'editar/:codigo', component: EditarExcursaoComponent },
         ],
     },
 ];
@@ -85,12 +87,13 @@ const exampleRoutes: Route[] = [
         MatRippleModule,
         MatStepperModule,
         MatCurrencyFormatModule,
-        EditorModule
+        EditorModule,
     ],
     declarations: [
         ExcursoesComponent,
         CadastrarExcursaoComponent,
         ListaExcursoesComponent,
+        EditarExcursaoComponent,
     ],
     providers: [{ provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }],
 })

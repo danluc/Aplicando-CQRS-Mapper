@@ -1,6 +1,6 @@
 import { Overlay } from '@angular/cdk/overlay';
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
     FormBuilder,
     FormControl,
@@ -8,7 +8,10 @@ import {
     Validators,
 } from '@angular/forms';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { MAT_AUTOCOMPLETE_SCROLL_STRATEGY } from '@angular/material/autocomplete';
+import {
+    MatAutocompleteTrigger,
+    MAT_AUTOCOMPLETE_SCROLL_STRATEGY,
+} from '@angular/material/autocomplete';
 import {
     DateAdapter,
     MAT_DATE_FORMATS,
@@ -65,11 +68,10 @@ export class CadastrarExcursaoComponent implements OnInit {
     public onibus: Array<OnibusDTO> = new Array<OnibusDTO>();
     public formEditor: FormGroup;
     public configuracoesEditor: object;
-
-    myControlOnibus = new FormControl();
-    myControlMotorista = new FormControl();
-    filteredMoto: Observable<MotoristaDTO[]>;
-    filteredOni: Observable<OnibusDTO[]>;
+    public myControlOnibus = new FormControl();
+    public myControlMotorista = new FormControl();
+    public filteredMoto: Observable<MotoristaDTO[]>;
+    public filteredOni: Observable<OnibusDTO[]>;
     public selecionadoOnibusMotoristas: Array<{
         onibus: OnibusDTO;
         motorista: MotoristaDTO;
@@ -77,6 +79,12 @@ export class CadastrarExcursaoComponent implements OnInit {
         onibus: OnibusDTO;
         motorista: MotoristaDTO;
     }>();
+
+    @ViewChild('myControlMotorista', { read: MatAutocompleteTrigger })
+    public controlMotoristaTrigger: MatAutocompleteTrigger;
+
+    @ViewChild('myControlOnibus', { read: MatAutocompleteTrigger })
+    public controlOnibusTrigger: MatAutocompleteTrigger;
 
     constructor(
         private _formBuilder: FormBuilder,
@@ -366,6 +374,7 @@ export class CadastrarExcursaoComponent implements OnInit {
     public setMotoristaOnibus(): void {
         const motorista = this.myControlMotorista.value as MotoristaDTO;
         const onibus = this.myControlOnibus.value as OnibusDTO;
+
         let hasMoto =
             this.selecionadoOnibusMotoristas.filter(
                 (e) => e.motorista.codigo == motorista.codigo
@@ -376,7 +385,7 @@ export class CadastrarExcursaoComponent implements OnInit {
                 (e) => e.onibus.codigo == onibus.codigo
             ).length > 0;
 
-        if (!hasOnibus && !hasMoto) {
+        if (!hasOnibus && !hasMoto && motorista && onibus) {
             let item = {
                 onibus: onibus,
                 motorista: motorista,
@@ -560,5 +569,21 @@ export class CadastrarExcursaoComponent implements OnInit {
             'Montes Claros / MG'
         );
         this.form.get('step5').get('contrato').setValue(textoContrato);
+    }
+
+    public abrirOptionsMotorista(): void {
+        this.filteredMoto = this.myControlMotorista.valueChanges.pipe(
+            startWith(''),
+            map((value) => this._filterMoto(''))
+        );
+        this.controlMotoristaTrigger.openPanel();
+    }
+
+    public abrirOptionsOnibus(): void {
+        this.filteredOni = this.myControlOnibus.valueChanges.pipe(
+            startWith(''),
+            map((value) => this._filterOnibus(''))
+        );
+        this.controlOnibusTrigger.openPanel();
     }
 }
