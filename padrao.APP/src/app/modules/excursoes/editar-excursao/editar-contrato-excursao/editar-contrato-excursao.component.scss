@@ -1,0 +1,9 @@
+::ng-deep .modal-editar-contrato {
+    mat-dialog-container {
+        overflow: hidden!important;
+    }
+}
+
+:host ::ng-deep.mat-dialog-content {
+    text-align: justify;
+}

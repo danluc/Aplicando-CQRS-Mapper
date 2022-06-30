@@ -8,6 +8,7 @@ import { VerbosHTTP } from 'app/core/models/usuarios/enums/verbos-http';
 import { AuthenticationService } from 'app/core/services/authentication.service';
 import { ExcursoesControllerService } from 'app/core/services/controllers/excursoes-controller.service';
 import { ToastService } from 'app/core/services/toast.service';
+import { EditarContratoExcursaoComponent } from '../editar-excursao/editar-contrato-excursao/editar-contrato-excursao.component';
 
 @Component({
     selector: 'app-lista-excursoes',
@@ -85,5 +86,27 @@ export class ListaExcursoesComponent implements OnInit {
                     this._fuseLoadingService.hide();
                 }
             );
+    }
+
+    public modalEditarContrato(item: ExcursaoDTO): void {
+        const dialogRef = this._matDialog.open(
+            EditarContratoExcursaoComponent,
+            {
+                width: window.innerWidth < 600 ? '95%' : 'auto',
+                maxWidth: window.innerWidth < 600 ? '99vw' : 'auto',
+                height: '98%',
+                maxHeight: '98%',
+                autoFocus: false,
+                disableClose: true,
+                data: item,
+                panelClass: 'modal-editar-contrato',
+            }
+        );
+
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+                this._buscarDados();
+            }
+        });
     }
 }

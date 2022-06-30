@@ -1,0 +1,66 @@
+<div class="flex flex-col max-w-240 md:min-w-160 max-h-screen -m-6">
+    <!-- Header -->
+    <div
+        class="flex flex-0 items-center justify-between h-16 pr-3 sm:pr-5 pl-6 sm:pl-8 bg-primary text-on-primary"
+    >
+        <div class="text-lg font-medium">
+            Atualizar contrato {{ this.data.nome }}
+        </div>
+        <button
+            mat-icon-button
+            [tabIndex]="-1"
+            (click)="this.matDialogRef.close(false)"
+        >
+            <mat-icon
+                class="text-current"
+                [svgIcon]="'heroicons_outline:x'"
+            ></mat-icon>
+        </button>
+    </div>
+
+    <form
+        class="flex flex-col flex-auto p-6 sm:p-8 overflow-y-auto"
+        [formGroup]="formEditor"
+    >
+        <editor
+            formControlName="contrato"
+            class="w-full"
+            required
+            [init]="this.configuracoesEditor"
+            id="template-editor"
+        >
+        </editor>
+
+        <!-- Actions -->
+        <div class="flex flex-col justify-between mt-4 sm:mt-6">
+            <div class="flex flex-row items-end justify-between mt-4">
+                <div>
+                    <button
+                        class="ml-auto mr-4 sm:ml-0"
+                        mat-stroked-button
+                        (click)="this.matDialogRef.close(false)"
+                    >
+                        Fechar
+                    </button>
+                </div>
+                <div style="min-width: 35% !important">
+                    <!-- Send -->
+                    <button
+                        class="order-first sm:order-last w-full"
+                        mat-flat-button
+                        [color]="'primary'"
+                        [disabled]="!this.formEditor.valid || this.salvando"
+                        (click)="this.salvar()"
+                    >
+                        <span *ngIf="!this.salvando">Salvar</span>
+                        <mat-progress-spinner
+                            *ngIf="this.salvando"
+                            [diameter]="24"
+                            [mode]="'indeterminate'"
+                        ></mat-progress-spinner>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

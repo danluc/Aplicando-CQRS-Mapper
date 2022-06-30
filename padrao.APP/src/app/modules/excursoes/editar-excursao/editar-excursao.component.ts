@@ -367,7 +367,6 @@ export class EditarExcursaoComponent implements OnInit {
             .get('horaRetorno')
             .value.split(':');
         dRetorno.setHours(horaRetorno[0], horaRetorno[1]);
-        console.log(dRetorno);
         this.form.get('step1').get('dataRetorno').setValue(dRetorno);
         let dSaida = new Date(this.form.get('step1').get('dataSaida').value);
         let horaSaida = this.form
@@ -380,14 +379,13 @@ export class EditarExcursaoComponent implements OnInit {
     }
 
     private montarDTOExcursao(): void {
+        const dataRetorno = this.form.get('step1').get('dataRetorno').value;
+        const dataSaida = this.form.get('step1').get('dataSaida').value;
         this.excursao.nome = this.form.get('step1').get('nome').value;
         this.excursao.dataIncio = this.form.get('step1').get('dataIncio').value;
         this.excursao.dataFim = this.form.get('step1').get('dataFim').value;
-        this.excursao.dataSaida = this.form.get('step1').get('dataSaida').value;
-        this.excursao.dataRetorno = this.form
-            .get('step1')
-            .get('dataRetorno').value;
-        console.log(this.form.get('step1').get('dataRetorno').value);
+        this.excursao.dataSaida = new Date(dataSaida);
+        this.excursao.dataRetorno = new Date(dataRetorno);
         this.excursao.enderecoDestino = this.form
             .get('step2')
             .get('enderecoDestino').value;
